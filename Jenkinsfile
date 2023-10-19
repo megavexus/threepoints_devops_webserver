@@ -8,17 +8,10 @@ pipeline {
             }
         }
         stage('Pruebas de SAST') {
-            parallel{
-                stage('Pruebas de SAST - Hilo 1'){
-                    steps {
-                        echo 'Hilo 1 - Ejecución de pruebas de SAST'
-                    }
-                }
-                stage('Impresion WORKSPACE - Hilo 2'){
-                    steps {
-                        echo "Hilo 2 - Path del WORKSPACE: ${WORKSPACE}"
-                    }
-                }
+            steps {
+                withSonarQubeEnv(installationName: 'Sonar Local',credentialsId: 'AO_Token') {
+                    sh "${tool("SonarScanner")}/bin/sonar-scanner -Dsonar.projectKey=threepoints_devops_webserver -Dsonar.projectName=threepoints_devops_webserver"
+                }   
             }
         }
         stage('Build') {
