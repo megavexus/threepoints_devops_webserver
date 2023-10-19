@@ -8,8 +8,17 @@ pipeline {
             }
         }
         stage('Pruebas de SAST') {
-            steps {
-                echo 'Ejecución de pruebas de SAST'
+            parallel{
+                stage('Pruebas de SAST - Hilo 1'){
+                    steps {
+                        echo 'Hilo 1 - Ejecución de pruebas de SAST'
+                    }
+                }
+                stage('Impresion WORKSPACE - Hilo 2'){
+                    steps {
+                        echo "Hilo 2 - Path del WORKSPACE: ${WORKSPACE}"
+                    }
+                }
             }
         }
         stage('Build') {
