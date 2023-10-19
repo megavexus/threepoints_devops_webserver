@@ -9,7 +9,7 @@ pipeline {
         }
         stage('Pruebas de SAST') {
             steps {
-                @echo “Ejecución de pruebas de SAST”
+                echo 'Ejecución de pruebas de SAST'
             }
         }
         stage('Build') {
