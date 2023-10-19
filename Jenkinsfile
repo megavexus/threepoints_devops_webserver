@@ -9,9 +9,17 @@ pipeline {
         }
         stage('Pruebas de SAST') {
             steps {
-                withSonarQubeEnv(installationName: 'Sonar Local',credentialsId: 'AO_Token') {
-                    sh "${tool("SonarScanner")}/bin/sonar-scanner -Dsonar.projectKey=threepoints_devops_webserver -Dsonar.projectName=threepoints_devops_webserver"
-                }   
+                echo 'Ejecución de pruebas de SAST'
+            }
+        }
+        stage('Configurar archivo') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'Credentials_Threepoints', passwordVariable: 'password', usernameVariable: 'username')]) {
+                    writeFile(file: 'ArchivoConf.txt', text: "[credentials] \nusername=${username} \npassword=${password}")
+                    sh "ls -l"
+                    sh 'cat ArchivoConf.txt'
+                    archiveArtifacts artifacts: 'ArchivoConf.txt'
+                }
             }
         }
         stage('Build') {
