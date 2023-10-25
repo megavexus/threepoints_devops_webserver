@@ -3,7 +3,7 @@ name: Continuous Integration
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build:
@@ -19,15 +19,14 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
-    steps:
-    - name: Pruebas de SAST
-      run: echo "Ejecución de pruebas de SAST"
+      - name: Pruebas de SAST
+        run: echo "Ejecución de pruebas de SAST"
       
-    - name: Crear archivo de credenciales
-      env:
-        USERNAME: '${{ secrets.USERNAME }}'
-        PASSWORD: '${{ secrets.PASSWORD }}'  # Corregido de USERNAME a PASSWORD
-      run: envsubst < credentials.ini.tpl > credentials.ini
+      - name: Crear archivo de credenciales
+        env:
+          USERNAME: '${{ secrets.USERNAME }}'
+          PASSWORD: '${{ secrets.PASSWORD }}'
+        run: envsubst < credentials.ini.tpl > credentials.ini
 
-    - name: Construcción del contenedor Docker
-      run: docker build -t devops_ws . --tag devops_ws_$(date +%s)
+      - name: Construcción del contenedor Docker
+        run: docker build -t devops_ws . --tag devops_ws_$(date +%s)
