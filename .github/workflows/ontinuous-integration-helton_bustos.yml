@@ -1,0 +1,28 @@
+name: Continuous Integration
+run-name: ${{ github.actor }} is learning GitHub Actions
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Pruebas de SAST
+      run: echo "Ejecución de pruebas de SAST"
+      
+    - name: Crear archivo de credenciales
+      env:
+        USERNAME: '${{ secrets.USERNAME }}'
+        USERNAME: '${{ secrets.PASSWORD }}'
+      run: envsubst < credentials.ini.tpl > credentials.ini
+
+    - name: Construcción del contenedor Docker
+      run: docker build -t devops_ws . --tag devops_ws_$(date +%s)
+
+    - name: Subir archivos de resultados
+      run: |
+        ls -al
