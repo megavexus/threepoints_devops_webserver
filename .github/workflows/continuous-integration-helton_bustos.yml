@@ -26,7 +26,7 @@ jobs:
     - name: Crear archivo de credenciales
       env:
         USERNAME: '${{ secrets.USERNAME }}'
-        USERNAME: '${{ secrets.PASSWORD }}'
+        PASSWORD: '${{ secrets.PASSWORD }}'  # Corregido de USERNAME a PASSWORD
       run: envsubst < credentials.ini.tpl > credentials.ini
 
     - name: Construcción del contenedor Docker
