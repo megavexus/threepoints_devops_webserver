@@ -22,4 +22,3 @@ jobs:
 
       - name: Construcción del contenedor Docker
         run: docker build -t devops_ws . --tag devops_ws_$(date +%s)
-
