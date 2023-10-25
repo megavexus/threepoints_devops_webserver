@@ -9,6 +9,7 @@ on:
 jobs:
   build:
     name: Build
+    run: sonar-scanner -X
     runs-on: ubuntu-latest
     permissions: read-all
     steps:
