@@ -14,6 +14,9 @@ jobs:
       - name: Pruebas de SAST
         run: echo "Ejecución de pruebas de SAST"
       
+      - name: Verificar la existencia de credentials.ini.tpl
+        run: ls $GITHUB_WORKSPACE/credentials.ini.tpl
+
       - name: Crear archivo de credenciales
         run: |
           cd $GITHUB_WORKSPACE
