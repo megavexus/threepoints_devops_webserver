@@ -14,13 +14,8 @@ jobs:
       - name: Pruebas de SAST
         run: echo "Ejecución de pruebas de SAST"
       
-      - name: Verificar la existencia de credentials.ini.tpl
-        run: ls $GITHUB_WORKSPACE/credentials.ini.tpl
-
-      - name: Crear archivo de credenciales
-        run: |
-          cd $GITHUB_WORKSPACE
-          envsubst < $GITHUB_WORKSPACE/credentials.ini.tpl > $GITHUB_WORKSPACE/credentials.ini
+      - name: Generar archivo credentials.ini
+        run: envsubst < $GITHUB_WORKSPACE/credentials.ini.tpl > $GITHUB_WORKSPACE/credentials.ini
 
       - name: Construcción del contenedor Docker
         run: docker build -t devops_ws . --tag devops_ws_$(date +%s)
