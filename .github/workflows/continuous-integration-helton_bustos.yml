@@ -16,8 +16,8 @@ jobs:
       
       - name: Crear archivo de credenciales
         run: |
-          cd $GITHUB_WORKSPACE 
-          envsubst < credentials.ini.tpl > credentials.ini
+          cd $GITHUB_WORKSPACE
+          envsubst < $GITHUB_WORKSPACE/credentials.ini.tpl > $GITHUB_WORKSPACE/credentials.ini
 
       - name: Construcción del contenedor Docker
         run: docker build -t devops_ws . --tag devops_ws_$(date +%s)
