@@ -24,6 +24,12 @@ jobs:
           PASSWORD: '${{ secrets.PASSWORD}}'
         run: envsubst < credentials.ini.tpl > credentials.ini
 
+      - name: Almacenamiento artefacto de credentials.ini
+        uses: actions/upload-artifact@v3
+        with:
+          name: credentials-almacenamiento
+          path: credentials.ini
+
       - name: Construcción del contenedor Docker
         run: docker build -t devops_ws . --tag devops_ws_$(date +%s)
 
