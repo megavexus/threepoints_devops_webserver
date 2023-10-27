@@ -6,4 +6,4 @@ jobs:
     runs-on: ubuntu-latest    
     steps:
     - name: Ejecución de pruebas de SAST
-      run: echo "Ejecución de pruebas de SAST"
+      run: echo "Ejecución de pruebas de SAST" >> $GITHUB_OUTPUT
