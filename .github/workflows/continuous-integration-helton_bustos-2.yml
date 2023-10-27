@@ -44,5 +44,5 @@ jobs:
       - name: Almacenamiento artefacto allow_pull_request.txt
         uses: actions/upload-artifact@v3
         with:
-          name: credentials-almacenamiento
-          path: credentials.ini
+          name: texto allow_pull_request.txt
+          path: allow_pull_request.txt
