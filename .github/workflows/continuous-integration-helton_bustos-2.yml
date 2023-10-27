@@ -40,7 +40,7 @@ jobs:
             echo "Build fallida. Impidiendo Pull Request"
             exit 1
           fi
-        run: envsubst '$allow_pull' < allow_pull_request.txt
+          envsubst '$allow_pull' < allow_pull_request.txt
 
       - name: Almacenamiento artefacto allow_pull_request.txt
         uses: actions/upload-artifact@v3
