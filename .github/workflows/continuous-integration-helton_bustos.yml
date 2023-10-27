@@ -4,8 +4,9 @@ name: Continuous Integration
 on:
   push:
     branches:
-      - master
-
+      - 'master'
+      - 'feature*'
+      - 'hotfix*'
 jobs:
   build:
     name: Build
