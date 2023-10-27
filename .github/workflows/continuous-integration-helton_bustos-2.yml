@@ -25,6 +25,7 @@ jobs:
       - name: Verificacion allow_pull_request.txt
         id: check_file
         run: |
+          envsubst '$allow_pull' < allow_pull_request.txt
           if [ -f "allow_pull_request.txt" ]; then
             echo "File 'allow_pull_request.txt' found."
             echo "allow_pull=true" >> $GITHUB_ENV
@@ -34,13 +35,13 @@ jobs:
 
       - name: Permitir la build si allow_pull vale True
         run: |
+          envsubst '$allow_pull' < allow_pull_request.txt
           if [[ "$allow_pull" == "true" ]]; then
             echo "Permitiendo Pull Request"
           else
             echo "Build fallida. Impidiendo Pull Request"
             exit 1
           fi
-          envsubst '$allow_pull' < allow_pull_request.txt
 
       - name: Almacenamiento artefacto allow_pull_request.txt
         uses: actions/upload-artifact@v3
