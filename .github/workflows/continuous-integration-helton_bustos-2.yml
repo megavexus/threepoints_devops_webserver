@@ -29,6 +29,7 @@ jobs:
         run: |
           if [ -f "allow_pull_request.txt" ]; then
             echo "File 'allow_pull_request.txt' found."
+            echo "allow_pull=true" >> $GITHUB_ENV
           else
             echo "File 'allow_pull_request.txt' not found."
           fi
