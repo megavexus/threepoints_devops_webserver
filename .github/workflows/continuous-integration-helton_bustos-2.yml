@@ -1,4 +1,3 @@
-
 name: Validar Pull Request
 
 on:
@@ -22,20 +21,20 @@ jobs:
       - name: Análisis de SAST
         run: echo "Realizando análisis de SAST"
 
+      - name: Crear allow_pull_request.txt
+        run: echo "allow_pull=${{ env.allow_pull }}" > allow_pull_request.txt
+
       - name: Verificacion allow_pull_request.txt
         id: check_file
         run: |
-          envsubst '$allow_pull' < allow_pull_request.txt
           if [ -f "allow_pull_request.txt" ]; then
             echo "File 'allow_pull_request.txt' found."
-            echo "allow_pull=true" >> $GITHUB_ENV
           else
             echo "File 'allow_pull_request.txt' not found."
           fi
 
       - name: Permitir la build si allow_pull vale True
         run: |
-          envsubst '$allow_pull' < allow_pull_request.txt
           if [[ "$allow_pull" == "true" ]]; then
             echo "Permitiendo Pull Request"
           else
@@ -46,5 +45,5 @@ jobs:
       - name: Almacenamiento artefacto allow_pull_request.txt
         uses: actions/upload-artifact@v3
         with:
-          name: texto allow_pull_request.txt
+          name: texto-allow-pull-request.txt
           path: allow_pull_request.txt
