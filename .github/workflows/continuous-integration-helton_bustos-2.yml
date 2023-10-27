@@ -1,0 +1,48 @@
+
+name: Validar Pull Request
+
+on:
+  pull_request:
+    types:
+      - opened
+
+jobs:
+  validate:
+    name: Validacion Pull Request Ejercicio 3
+    runs-on: ubuntu-latest
+
+    env:
+      allow_pull: false
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Análisis de SAST
+        run: echo "Realizando análisis de SAST"
+
+      - name: Verificacion allow_pull_request.txt
+        id: check_file
+        run: |
+          if [ -f "allow_pull_request.txt" ]; then
+            echo "File 'allow_pull_request.txt' found."
+            echo "allow_pull=true" >> $GITHUB_ENV
+          else
+            echo "File 'allow_pull_request.txt' not found."
+          fi
+
+      - name: Permitir la build si allow_pull vale True
+        run: |
+          if [[ "$allow_pull" == "true" ]]; then
+            echo "Permitiendo Pull Request"
+          else
+            echo "Build fallida. Impidiendo Pull Request"
+            exit 1
+          fi
+        run: envsubst > allow_pull_request.txt
+
+      - name: Almacenamiento artefacto allow_pull_request.txt
+        uses: actions/upload-artifact@v3
+        with:
+          name: credentials-almacenamiento
+          path: credentials.ini
