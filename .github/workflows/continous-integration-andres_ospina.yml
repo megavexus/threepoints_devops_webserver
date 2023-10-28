@@ -3,7 +3,10 @@ run-name: ${{ github.actor }} - Practica 3 - Threepoints - CI/CD
 on: [push]
 jobs:
   continous-integration-andres-ospina:
-    runs-on: ubuntu-latest    
+    runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.step1.outputs.sast }}
     steps:
     - name: Ejecución de pruebas de SAST
-      run: echo "Ejecución de pruebas de SAST" >> $GITHUB_OUTPUT
+      id: step1
+      run: echo "sast=Ejecución de pruebas de SAST" >> $GITHUB_OUTPUT
