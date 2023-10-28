@@ -5,5 +5,5 @@ jobs:
   continous-integration-andres-ospina:
     runs-on: ubuntu-latest    
     steps:
-    - name: Ejecución de pruebas de SAST      
+    - name: Pruebas de SAST      
       run: echo "Ejecucion de pruebas de SAST"
