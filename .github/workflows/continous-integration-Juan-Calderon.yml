@@ -11,7 +11,7 @@ jobs:
   Crea-file-credenciales:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "${{ env.USERNAME }} ${{ env.PASSWORD }}"
+      - run: echo "username : ${{ env.USERNAME }} password : ${{ env.PASSWORD }}"
       - run: echo "Crea credenciales file"
  
      
