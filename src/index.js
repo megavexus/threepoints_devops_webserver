@@ -14,8 +14,10 @@
 
 // [START cloudrun_helloworld_service]
 // [START run_helloworld_service]
-const express = require('express');
-const app = express();
+let express = require('express');
+let app = express();  // Compliant
+app.disable("x-powered-by")
+
 
 app.get('/', (req, res) => {
   const name = process.env.NAME || 'World';
