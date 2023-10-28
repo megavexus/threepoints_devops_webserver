@@ -3,7 +3,7 @@ run-name: ${{ github.actor }} - Practica 3 - Threepoints - CI/CD
 on: [push]
 jobs:
   continous-integration-andres-ospina:
-    if: github.ref_name == 'master' || contains(github.ref_name,'feature')
+    if: github.ref_name == 'master' || startsWith(github.ref_name,'feature') || startsWith(github.ref_name,'hotfix')
     runs-on: ubuntu-latest    
     steps:    
     - name: Pruebas de SAST      
