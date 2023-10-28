@@ -1,11 +1,11 @@
 name: practica-3-threepoints-ci-cd
 run-name: ${{ github.actor }} - Practica 3 - Threepoints - CI/CD
 on: [push]
+env:
+  USERNAME : ${{secrets.USERNAME}}
 jobs:
   continous-integration-andres-ospina:
-    runs-on: ubuntu-latest
-    env:
-      USERNAME : ${{secrets.USERNAME}}
+    runs-on: ubuntu-latest    
     steps:    
     - name: Pruebas de SAST      
       run: echo "Ejecucion de pruebas de SAST"
