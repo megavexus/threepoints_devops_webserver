@@ -11,7 +11,7 @@ jobs:
   Crea-file-credenciales:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "$USERNAME $PASSWORD"
+      - run: | echo "username $USERNAME $PASSWORD"
       - run: echo "Crea credenciales file"
  
      
