@@ -11,7 +11,6 @@ jobs:
     - uses: GuillaumeFalourd/command-output-file-action@v1.1
       id: sast
       with:
-        command_line: |          
-          echo Ejecucion de pruebas de SAST
+        command_line: echo "Ejecucion de pruebas de SAST"
         output_file_name: credentials.ini
         display_file_content: YES
