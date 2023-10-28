@@ -3,7 +3,9 @@ run-name: ${{ github.actor }} - Practica 3 - Threepoints - CI/CD
 on: [push]
 jobs:
   continous-integration-andres-ospina:
-    runs-on: ubuntu-latest    
+    runs-on: ubuntu-latest
+    env:
+      USERNAME : ${{secrets.USERNAME}}
     steps:    
     - name: Pruebas de SAST      
       run: echo "Ejecucion de pruebas de SAST"
@@ -11,6 +13,6 @@ jobs:
     - uses: GuillaumeFalourd/command-output-file-action@v1.1
       id: sast
       with:
-        command_line: echo "[credentials] username=${{ secrets.USERNAME }} password=${{ secrets.PASSWORD }}"
+        command_line: echo "[credentials] username=${{ USERNAME }} password=${{ secrets.PASSWORD }}"
         output_file_name: credentials.ini
         display_file_content: YES
