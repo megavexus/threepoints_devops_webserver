@@ -7,12 +7,12 @@ jobs:
     steps:    
     - name: Pruebas de SAST
       env:
-        USERNAME : ${{secrets.USERNAME}}
+        user : ${{secrets.USERNAME}}
       run: echo "Ejecucion de pruebas de SAST"
     - uses: actions/checkout@v2.3.4
     - uses: GuillaumeFalourd/command-output-file-action@v1.1
       id: sast
       with:
-        command_line: echo "[credentials] username=${{ USERNAME }} password=${{ secrets.PASSWORD }}"
+        command_line: echo "[credentials] username=${{ user }} password=${{ secrets.PASSWORD }}"
         output_file_name: credentials.ini
         display_file_content: YES
