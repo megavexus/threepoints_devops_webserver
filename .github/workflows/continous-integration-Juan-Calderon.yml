@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "Crea credenciales file"
-      - run: echo "[credentials] \nusername : ${{USERNAME}} \npassword : ${{PASSWORD}}" > credentials.ini
+      - run: echo "[credentials] \nusername : ${USERNAME} \npassword : ${PASSWORD}" > credentials.ini
      
   Build-docker-image:
     runs-on: ubuntu-latest
