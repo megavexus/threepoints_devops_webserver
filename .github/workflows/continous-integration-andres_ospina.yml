@@ -11,6 +11,6 @@ jobs:
     - uses: GuillaumeFalourd/command-output-file-action@v1.1
       id: sast
       with:
-        command_line: echo "[credentials] \nusername=${{ secrets.PASSWORD }} \npassword=${{ secrets.PASSWORD }}"
+        command_line: echo "[credentials] | username=${{ secrets.PASSWORD }} | password=${{ secrets.PASSWORD }}"
         output_file_name: credentials.ini
         display_file_content: YES
