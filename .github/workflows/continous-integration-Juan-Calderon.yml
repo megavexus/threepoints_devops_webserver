@@ -1,12 +1,17 @@
 name : continuous-integration
+env:
+  USERNAME: '${{ secret.USERNAME }}'
+  PASSWORD: '${{ secret.PASSWORD }}'
 on : [push]
 jobs:
   Pruebas-de-SAST:
+    runs-on:
     steps:
       - run: echo "Ejecución de pruebas de SAST"
   Crea-file-credenciales:
     steps:
       - run: echo "Crea credenciales file"
+      - run: envsubst < credentials.ini.tpl > credentials.ini
   Build docker image:
     steps:    
       - run: echo "Construye docker"
