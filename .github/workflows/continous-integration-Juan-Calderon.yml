@@ -10,8 +10,12 @@ jobs:
       - run: echo "Ejecución de pruebas de SAST"
   Crea-file-credenciales:
     runs-on: ubuntu-latest
+    defaults:
+      run :
+         working-directory: .
     steps:
       - run: echo ${{ github.workspace  }}
+     
       - run: envsubst < ${{ github.workspace }}/credentials.ini.tpl > credentials.ini
       - run: echo '[credentials] username= ${{ env.USERNAME }} password= ${{ env.PASSWORD }}' >> credentials2.ini
       - run: echo "Crea credenciales file"
