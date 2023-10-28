@@ -17,7 +17,7 @@
 const express = require('express');
 const app = express();
 
-const test = 'ejercicio 3 test';
+const test = 'ejercicio 3 feature';
 
 app.get('/', (req, res) => {
   const name = process.env.NAME || 'World';
