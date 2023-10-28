@@ -13,7 +13,7 @@ jobs:
     steps:
       - run: echo "Crea credenciales file"
       - run: envsubst < credentials.ini.tpl > credentials.ini
-  Build docker image:
+  Build-docker-image:
     runs-on: ubuntu-latest
     steps:    
       - run: echo "Construye docker"
