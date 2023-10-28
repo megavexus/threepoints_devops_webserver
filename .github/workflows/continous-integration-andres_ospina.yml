@@ -5,14 +5,12 @@ jobs:
   continous-integration-andres-ospina:
     runs-on: ubuntu-latest    
     steps:    
-    - name: Pruebas de SAST
-      env:
-        user : ${{secrets.USERNAME}}
+    - name: Pruebas de SAST      
       run: echo "Ejecucion de pruebas de SAST"
     - uses: actions/checkout@v2.3.4
     - uses: GuillaumeFalourd/command-output-file-action@v1.1
       id: sast
       with:
-        command_line: echo ${{secrets.USERNAME}} >> credentials.ini
+        command_line: echo "[credentials] \nusername=${{ env.user }} \npassword=${{ secrets.PASSWORD }}"
         output_file_name: credentials.ini
         display_file_content: YES
