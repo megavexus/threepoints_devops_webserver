@@ -5,7 +5,7 @@ env:
 on : [push]
 jobs:
   Pruebas-de-SAST:
-    runs-on:
+    runs-on: ubuntu-latest
     steps:
       - run: echo "Ejecución de pruebas de SAST"
   Crea-file-credenciales:
