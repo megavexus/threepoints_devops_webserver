@@ -1,7 +1,7 @@
 name : continuous-integration
 env:
-  USERNAME: '${{ secret.USERNAME }}'
-  PASSWORD: '${{ secret.PASSWORD }}'
+  USERNAME: '${{ secrets.USERNAME }}'
+  PASSWORD: '${{ secrets.PASSWORD }}'
 on : [push]
 jobs:
   Pruebas-de-SAST:
