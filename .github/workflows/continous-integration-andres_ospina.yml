@@ -14,3 +14,5 @@ jobs:
           command_line: echo "[credentials] username=${{ secrets.PASSWORD }} | password=${{ secrets.PASSWORD }}"
           output_file_name: credentials.ini
           display_file_content: YES
+    - name: Build docker image
+      run: docker build -t devops_ws . --tag devops_ws_:$(date +%s)
