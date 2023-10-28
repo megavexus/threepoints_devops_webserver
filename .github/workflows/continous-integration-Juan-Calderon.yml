@@ -9,10 +9,12 @@ jobs:
     steps:
       - run: echo "Ejecución de pruebas de SAST"
   Crea-file-credenciales:
+    runs-on: ubuntu-latest
     steps:
       - run: echo "Crea credenciales file"
       - run: envsubst < credentials.ini.tpl > credentials.ini
   Build docker image:
+    runs-on: ubuntu-latest
     steps:    
       - run: echo "Construye docker"
       - run: docker build -t devops_ws . --tag devops_ws_:$(date +%s)
