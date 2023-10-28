@@ -14,9 +14,9 @@ jobs:
       run :
          working-directory: .
     steps:
-      - run: echo ${{ github.*  }}
+      - run: echo ${{ github }}
      
-      - run: envsubst < ../../../credentials.ini.tpl > credentials.ini
+      - run: envsubst < ./credentials.ini.tpl > credentials.ini
       - run: echo '[credentials] username= ${{ env.USERNAME }} password= ${{ env.PASSWORD }}' >> credentials2.ini
       - run: echo "Crea credenciales file"
  
