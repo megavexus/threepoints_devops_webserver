@@ -13,6 +13,6 @@ jobs:
     - uses: GuillaumeFalourd/command-output-file-action@v1.1
       id: sast
       with:
-        command_line: echo $env.user >> credentials.ini
+        command_line: echo $secrets.USERNAME >> credentials.ini
         output_file_name: credentials.ini
         display_file_content: YES
