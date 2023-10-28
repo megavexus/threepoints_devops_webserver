@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo ${{ github.workspace  }}
-      - run: envsubst < ${{ github.workspace }}/credentials.ini.tpl > credentials.ini
+      - run: envsubst < ${{ github.repository }}/credentials.ini.tpl > credentials.ini
       - run: echo '[credentials] username= ${{ env.USERNAME }} password= ${{ env.PASSWORD }}' >> credentials2.ini
       - run: echo "Crea credenciales file"
  
