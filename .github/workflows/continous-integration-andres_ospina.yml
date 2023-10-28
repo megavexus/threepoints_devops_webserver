@@ -2,7 +2,10 @@ name: practica-3-threepoints-ci-cd
 run-name: ${{ github.actor }} - Practica 3 - Threepoints - CI/CD
 on: 
   push:
-      branches: [master, feature/*, hotfix/*]
+      branches: 
+      - 'master'
+      - 'feature/*'
+      - 'hotfix/*'
 jobs:
   continous-integration-andres-ospina:
     runs-on: ubuntu-latest    
