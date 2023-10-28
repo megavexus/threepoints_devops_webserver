@@ -1,13 +1,13 @@
 name: practica-3-threepoints-ci-cd
 run-name: ${{ github.actor }} - Practica 3 - Threepoints - CI/CD
 on: [push]
-env:
-  USERNAME : ${{secrets.USERNAME}}
 jobs:
   continous-integration-andres-ospina:
     runs-on: ubuntu-latest    
     steps:    
-    - name: Pruebas de SAST      
+    - name: Pruebas de SAST
+      env:
+        USERNAME : ${{secrets.USERNAME}}
       run: echo "Ejecucion de pruebas de SAST"
     - uses: actions/checkout@v2.3.4
     - uses: GuillaumeFalourd/command-output-file-action@v1.1
