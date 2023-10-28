@@ -6,7 +6,7 @@ on:
       - 'master'
 jobs:
   continous-integration-andres-ospina:
-    if: startsWith(github.head_ref, 'feature/') || startsWith(github.head_ref, 'hotfix/')
+    if: startsWith(github.head_ref, 'feature') || startsWith(github.head_ref, 'hotfix')
     runs-on: ubuntu-latest    
     steps:    
     - name: Pruebas de SAST      
