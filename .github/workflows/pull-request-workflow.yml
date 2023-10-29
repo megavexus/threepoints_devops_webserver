@@ -7,6 +7,8 @@ jobs:
   Realizando-analisis-de-SAST:
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
     - name: Iniciando analisis
       run: echo 'Realizando análisis de SAST'
     - name: Comprobando existencia de allow_pull_request.txt
