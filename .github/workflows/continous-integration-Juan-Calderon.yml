@@ -16,8 +16,10 @@ jobs:
     steps:
       - name: checkout repo
         uses: actions/checkout@v2.3.4
-      - run: envsubst < credentials.ini.tpl >> credentials.ini
-      - run: echo '[credentials] username= ${{ env.USERNAME }} password= ${{ env.PASSWORD }}' >> credentials2.ini
+      - run: envsubst < credentials.ini.tpl > credentials.ini
+      - run: git add .
+      - run: git commit -m "crea credentials.ini en Pipeline"
+      - run: git push
       - run: echo "Crea credenciales file"
  
      
