@@ -22,5 +22,5 @@ jobs:
     runs-on: ubuntu-latest
     name: Build docker image
     steps:
-      - run: docker build -t devops_ws . --tag devops_ws_:$(date +%s)
+      - run: docker build -t devops_ws . --tag devops_ws_$(date +%s)
 
