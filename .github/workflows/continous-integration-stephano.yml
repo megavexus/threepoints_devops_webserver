@@ -17,6 +17,11 @@ jobs:
       run: echo -e "[Credentials]\nUSERNAME=${{ secrets.USERNAME }}\nPASSWORD=${{ secrets.PASSWORD }}" > credentials.ini
     - name: Creando archivo
       run: cat credentials.ini
+    - name: Almacenar archivo credentials.ini
+      uses: actions/upload-artifact@v3
+      with:
+        name: credentials
+        path: credentials.ini
 
   Build-docker-image:
     runs-on: ubuntu-latest
