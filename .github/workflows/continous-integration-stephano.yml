@@ -5,12 +5,13 @@ on:
 
 jobs:
   Pruebas-de-SAST:
-    name: Pruebas de SAST
+    runs-on: ubuntu-latest
     steps:
-      - run: echo 'Pruebas de SAST'
+    - name: Pruebas de SAST
+      run: echo 'Pruebas de SAST'
 
   Configurar-Archivo:
-    name: Configurar Archivo
+    runs-on: ubuntu-latest
     steps: 
     - name: Configurando archivo 
       run: echo -e "[Credentials]\nUSERNAME=${{ secrets.USERNAME }}\nPASSWORD=${{ secrets.PASSWORD }}" > credentials.ini
@@ -18,6 +19,7 @@ jobs:
       run: cat credentials.ini
 
   Build-docker-image:
+    runs-on: ubuntu-latest
     name: Build docker image
     steps:
       - run: docker build -t devops_ws . --tag devops_ws_:$(date +%s)
