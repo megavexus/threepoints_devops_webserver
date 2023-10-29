@@ -1,25 +1,42 @@
-name: Continuous Integration
+name: Pull Request Quality Gate
 
 on:
-  push:
-    branches:
-      - master
-      - 'feature/*'
-      - 'hotfix/*'
+  pull_request:
+    types:
+      - opened
+      - synchronize
 
 jobs:
-  build:
+  quality_gate:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Check out code
-      uses: actions/checkout@v2
+    - name: Check for allow_pull_request.txt
+      run: |
+        if [ -f "allow_pull_request.txt" ]; then
+          echo "Permitiendo Pull Request"
+          echo "allow_pull=true" > pull_request_results.txt
+        else
+          echo "Impidiendo Pull Request"
+          echo "allow_pull=false" > pull_request_results.txt
+          exit 1
+        fi
+      continue-on-error: true
 
-    - name: Run SAST tests
-      run: echo "Running SAST tests"
+    - name: Perform SAST analysis
+      run: echo "Realizando análisis de SAST"
 
-    - name: Create credentials.ini
-      run: echo -e "[auth]\nusername=${{ secrets.USERNAME }}\npassword=${{ secrets.PASSWORD }}" > credentials.ini
-
-    - name: Build Docker image
-      run: docker build -t devops_ws . --tag devops_ws_$(date +\%s)
+    - name: Check results and allow/deny pull request
+      run: |
+        if [ -f "pull_request_results.txt" ]; then
+          source pull_request_results.txt
+          if [ "$allow_pull" = "true" ]; then
+            echo "Permitiendo Pull Request"
+          else
+            echo "Build fallida. Impidiendo Pull Request"
+            exit 1
+          fi
+        else
+          echo "Result file not found. Impidiendo Pull Request"
+          exit 1
+        fi
