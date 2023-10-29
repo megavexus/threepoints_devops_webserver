@@ -10,7 +10,6 @@ jobs:
     - name: Iniciando analisis
       run: echo 'Realizando análisis de SAST'
     - name: Comprobando existencia de allow_pull_request.txt
-      id: checkfile
       run: |
         if [[ -f "allow_pull_request.txt" ]]; then
           echo "allow_pull_request.txt existe."
