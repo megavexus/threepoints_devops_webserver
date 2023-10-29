@@ -10,6 +10,7 @@ jobs:
     - name: Iniciando analisis
       run: echo 'Realizando análisis de SAST'
     - name: Comprobando existencia de allow_pull_request.txt
+      id: checkfile
       run: |
         if [[ -f "allow_pull_request.txt" ]]; then
           echo "allow_pull_request.txt existe."
@@ -20,7 +21,7 @@ jobs:
         fi
     - name: Ejecutando workflow en base a variable
       run: |
-        if [[ "${{ env.allow_pull }}" == "true" ]]; then
+        if [[ "${{ allow_pull }}" == "true" ]]; then
           echo "Permitiendo Pull Request"
         else
           echo "Build fallida. Impidiendo Pull Request."
