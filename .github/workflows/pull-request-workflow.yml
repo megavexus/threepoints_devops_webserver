@@ -1,0 +1,28 @@
+name: ejercicio4-workflow
+on:
+  pull_request:
+    branches: [ master, 'feature*', 'hotfix*' ]
+
+jobs:
+  Realizando-analisis-de-SAST:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Iniciando analisis
+      run: echo 'Realizando análisis de SAST'
+    - name: Comprobando existencia de allow_pull_request.txt
+      run: |
+        if [[ -f "allow_pull_request.txt" ]]; then
+          echo "allow_pull_request.txt existe."
+          echo "allow_pull=true" >> $GITHUB_ENV
+        else
+          echo "allow_pull_request.txt no existe"
+          echo "allow_pull=false" >> $GITHUB_ENV
+        fi
+    - name: Ejecutando workflow en base a variable
+      run: |
+        if [[ "${{ env.allow_pull }}" == "true" ]]; then
+          echo "Permitiendo Pull Request"
+        else
+          echo "Build fallida. Impidiendo Pull Request."
+          exit 1
+        fi
