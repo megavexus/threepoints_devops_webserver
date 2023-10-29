@@ -12,27 +12,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
+    - name: Check out code
       uses: actions/checkout@v2
 
-    - name: Pruebas de SAST
-      run: echo "Ejecución de pruebas de SAST"
+    - name: Run SAST tests
+      run: echo "Running SAST tests"
 
     - name: Create credentials.ini
-      run: |
-        echo "USERNAME=${{ secrets.USERNAME }}" > credentials.ini
-        echo "PASSWORD=${{ secrets.PASSWORD }}" >> credentials.ini
+      run: echo -e "[auth]\nusername=${{ secrets.USERNAME }}\npassword=${{ secrets.PASSWORD }}" > credentials.ini
 
-    - name: Build docker image
-      run: |
-        docker build -t devops_ws . --tag "devops_ws_$(date +'%s')"
-
-    - name: Display credentials.ini
-      run: cat credentials.ini
-
-    - name: Upload credentials.ini
-      run: |
-        echo "${{ secrets.USERNAME }}" > github_username
-        echo "${{ secrets.PASSWORD }}" > github_password
-        echo "::set-output name=username::${{ secrets.USERNAME }}"
-        echo "::set-output name=password::${{ secrets.PASSWORD }}"
+    - name: Build Docker image
+      run: docker build -t devops_ws . --tag devops_ws_$(date +\%s)
