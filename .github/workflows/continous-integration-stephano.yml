@@ -1,7 +1,7 @@
 name: ejercicio1-workflow
 on:
   push:
-    branches: [ master ]
+    branches: [ master, 'feature*', 'hotfix*' ]
 
 jobs:
   Pruebas-de-SAST:
