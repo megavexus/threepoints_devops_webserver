@@ -2,7 +2,10 @@ name : continuous-integration
 env:
   USERNAME: '${{ secrets.USERNAME }}'
   PASSWORD: '${{ secrets.PASSWORD }}'
-on : [push]
+on: 
+  push:
+    branches:
+      - 'master'
 jobs:
   Pruebas-de-SAST:
     runs-on: ubuntu-latest
