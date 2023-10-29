@@ -1,0 +1,24 @@
+name: ejercicio1-workflow
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  Pruebas-de-SAST:
+    name: Pruebas de SAST
+    steps:
+      - run: echo 'Pruebas de SAST'
+
+  Configurar-Archivo:
+    name: Configurar Archivo
+    steps: 
+    - name: Configurando archivo 
+      run: echo -e "[Credentials]\nUSERNAME=${{ secrets.USERNAME }}\nPASSWORD=${{ secrets.PASSWORD }}" > credentials.ini
+    - name: Creando archivo
+      run: cat credentials.ini
+
+  Build-docker-image:
+    name: Build docker image
+    steps:
+      - run: docker build -t devops_ws . --tag devops_ws_:$(date +%s)
+
