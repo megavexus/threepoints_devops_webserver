@@ -4,10 +4,11 @@ on:
   push:
     branches:
       - master
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2
@@ -19,6 +20,12 @@ jobs:
       run: |
         echo "USERNAME=${{ secrets.USERNAME }}" > credentials.ini
         echo "PASSWORD=${{ secrets.PASSWORD }}" >> credentials.ini
+
+    - name: Mostrar archivo de credenciales (sin credenciales)
+      run: cat credentials.ini | grep -v "PASSWORD"
+
+    - name: Setup Docker Buildx
+      uses: docker/setup-buildx-action@v1
 
     - name: Build docker image
       run: docker build -t devops_ws . --tag devops_ws_:$(date +%s)
