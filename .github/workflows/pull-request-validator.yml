@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
       - name: Realizando análisis de SAST
         run: echo "Realizando análisis de SAST"
@@ -40,20 +40,10 @@ jobs:
           exit 1
 
       - name: Guardar archivo como artefacto
-        if: always() # Asegura que este paso se ejecute incluso si los pasos anteriores fallan
-        run: echo "Dummy content" > allow_pull_request.txt
-        persist-to-workspace:
-          root: ${{ github.workspace }}
-
-  post_process:
-    needs: analyze_code
-    runs-on: ubuntu-latest
-    steps:
-      - name: Descargar artefacto
-        uses: actions/download-artifact@v3
+        if: always()
+        run: echo "Dummy content" > ${{ github.workspace }}/allow_pull_request.txt
+      - name: Upload artefacto
+        uses: actions/upload-artifact@v2
         with:
           name: pull_request_artifact
           path: ${{ github.workspace }}
-
-      - name: Mostrar contenido del artefacto
-        run: cat ${{ github.workspace }}/allow_pull_request.txt
