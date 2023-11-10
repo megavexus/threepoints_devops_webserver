@@ -1,0 +1,44 @@
+name: Pull Request Analysis
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  analyze_code:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Realizando análisis de SAST
+        run: echo "Realizando análisis de SAST"
+
+      - name: Comprobar requisitos
+        id: check_requirements
+        run: |
+          if [ -f "allow_pull_request.txt" ]; then
+            echo "Permitiendo Pull Request"
+            echo "::set-output name=allow_pull::true"
+          else
+            echo "Impidiendo Pull Request"
+            echo "::set-output name=allow_pull::false"
+            exit 1
+          fi
+
+      - name: Permitir build si allow_pull es True
+        if: steps.check_requirements.outputs.allow_pull == 'true'
+        run: echo "Permitiendo Pull Request"
+
+      - name: Impedir build si allow_pull es False
+        if: steps.check_requirements.outputs.allow_pull == 'false'
+        run: |
+          echo "Build fallida. Impidiendo Pull Request"
+          exit 1
+
+    artifacts:
+      paths:
+        - allow_pull_request.txt
