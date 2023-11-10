@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Realizando análisis de SAST
         run: echo "Realizando análisis de SAST"
@@ -22,10 +22,10 @@ jobs:
         run: |
           if [ -f "allow_pull_request.txt" ]; then
             echo "Permitiendo Pull Request"
-            echo "::set-output name=allow_pull::true"
+            echo "::save-state name=allow_pull::true"
           else
             echo "Impidiendo Pull Request"
-            echo "::set-output name=allow_pull::false"
+            echo "::save-state name=allow_pull::false"
             exit 1
           fi
 
@@ -43,7 +43,7 @@ jobs:
         if: always()
         run: echo "Dummy content" > ${{ github.workspace }}/allow_pull_request.txt
       - name: Upload artefacto
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: pull_request_artifact
           path: ${{ github.workspace }}
