@@ -23,7 +23,7 @@ pipeline {
                         withCredentials([usernamePassword(credentialsId: 'Credentials_Threepoints', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                             bat "echo '[credentials]' > credentials2.ini"
                             bat "echo 'user=${USERNAME}' >> credentials2.ini"
-                            bat "echo 'password=${PASSWORD}' >> credentials2.ini"
+                            //bat "echo 'password=${PASSWORD}' >> credentials2.ini"
                         }
                     }
                     post {
