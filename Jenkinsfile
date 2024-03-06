@@ -21,9 +21,9 @@ pipeline {
                 steps{
                     script {
                         withCredentials([usernamePassword(credentialsId: 'Credentials_Threepoints', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                            sh "echo '[credentials]' > credentials2.ini"
-                            sh "echo 'user=${USERNAME}' >> credentials2.ini"
-                            sh "echo 'password=${PASSWORD}' >> credentials2.ini"
+                            bat "echo '[credentials]' > credentials2.ini"
+                            bat "echo 'user=${USERNAME}' >> credentials2.ini"
+                            bat "echo 'password=${PASSWORD}' >> credentials2.ini"
                         }
                     }
                     post {
