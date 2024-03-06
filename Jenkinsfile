@@ -1,6 +1,9 @@
 pipeline {
     agent any
 
+    parameters {
+        credentials(name: 'Credentials_access', description: 'Credenciales de usuario y contraseña', defaultValue: 'alexcst90', credentialType: 'Username with password', required: true)
+    }
     stages {
             stage('Checkout') {
                 steps {
@@ -14,7 +17,24 @@ pipeline {
 
             
             }
+            stage('Configurar archivo'){
+                steps{
+                    script {
+                        withCredentials([usernamePassword(credentialsId: 'Credentials_Threepoints', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                            sh "echo '[credentials]' > credentials2.ini"
+                            sh "echo 'user=${USERNAME}' >> credentials2.ini"
+                            sh "echo 'password=${PASSWORD}' >> credentials2.ini"
+                        }
+                    }
+                    post {
+                        always {
+                            archiveArtifacts artifacts: 'credentials.ini'
+                        }
+                    }
+                }
+            }
             stage('Imprimir Env'){
+
                 parallel{
                     
                     stage('Pruebas de SAS'){
@@ -22,6 +42,8 @@ pipeline {
                             echo "Variable de entorno Workspace: ${WORKSPACE}"
                         }
                     }
+
+
 
                     stage('Build'){
                         steps{
