@@ -21,14 +21,14 @@ pipeline {
                 steps{
                     script {
                         withCredentials([usernamePassword(credentialsId: 'Credentials_Threepoints', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                            bat "echo '[credentials]' > credentials2.ini"
-                            bat "echo 'user=${USERNAME}' >> credentials2.ini"
+                            //bat "echo '[credentials]' > credentials2.ini"
+                            //bat "echo 'user=${USERNAME}' >> credentials2.ini"
                             //bat "echo 'password=${PASSWORD}' >> credentials2.ini"
                         }
                     }
                     post {
                         always {
-                            archiveArtifacts artifacts: 'credentials.ini'
+                            archiveArtifacts artifacts: 'credentials2.ini'
                         }
                     }
                 }
