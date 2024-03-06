@@ -1,0 +1,23 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Pruebas de SAST
+      run: echo "Ejecución de pruebas de SAST"
+
+    - name: Crear archivo de credenciales
+      run: echo "[credentials]" > credentials.ini && echo "username=${{ secrets.USERNAME }}" >> credentials.ini && echo "password=${{ secrets.PASSWORD }}" >> credentials.ini
+
+    - name: Build Docker image
+      run: docker build -t devops_ws . --tag devops_ws_:$(date +%s)
