@@ -14,19 +14,23 @@ pipeline {
 
             
             }
-        parallel{
             stage('Imprimir Env'){
-                steps {
-                    echo "Variable de entorno Workspace: ${WORKSPACE}"
+                parallel{
+                    
+                    stage('Pruebas de SAS'){
+                        steps {
+                            echo "Variable de entorno Workspace: ${WORKSPACE}"
+                        }
+                    }
+
+                    stage('Build'){
+                        steps{
+                            bat 'docker build -t devops_ws . '
+                        }
+                    }
+
                 }
                 
-            }
-            
-            stage('Build'){
-            
-                steps{
-                    bat 'docker build -t devops_ws . '
-                }
             }
         }
     }
