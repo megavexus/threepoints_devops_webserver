@@ -1,0 +1,53 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                script {
+                    echo 'Checking out code...'
+                    git 'https://Baldo15@github.com/Baldo15/threepoints_devops_webserver.git'
+                }
+            }
+        }
+
+        stage('Pruebas de SAST') {
+            steps {
+                script {
+                    echo 'Ejecución de pruebas de SAST'
+                    // Puedes incluir comandos para ejecutar pruebas de SAST (mockeadas en este ejemplo)
+                }
+            }
+        }
+
+        stage('Imprimir Env') {
+            parallel {
+                stage('Imprimir WORKSPACE') {
+                    steps {
+                        script {
+                            echo "Path del WORKSPACE: ${env.WORKSPACE}"
+                        }
+                    }
+                }
+
+                stage('Otro paso paralelo') {
+                    steps {
+                        script {
+                            echo 'Ejecutando otro paso paralelo...'
+                            // Agrega comandos adicionales si es necesario
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Build') {
+            steps {
+                script {
+                    echo 'Construyendo el contenedor de Docker...'
+                    sh 'docker build -t devops_ws .'
+                }
+            }
+        }
+    }
+}
