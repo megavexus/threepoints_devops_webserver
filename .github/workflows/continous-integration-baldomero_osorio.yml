@@ -20,4 +20,4 @@ jobs:
       run: echo "[credentials]" > credentials.ini && echo "username=${{ secrets.USERNAME }}" >> credentials.ini && echo "password=${{ secrets.PASSWORD }}" >> credentials.ini
 
     - name: Build Docker image
-      run: docker build -t devops_ws . --tag devops_ws_:$(date +%s)
+      run: docker build -t devops_ws:$(date +%s) .
