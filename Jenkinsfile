@@ -20,11 +20,14 @@ pipeline {
 
                 parallel{
                     
-                    // stage('Pruebas de SAS'){
-                    //     steps {
-                    //         echo "Variable de entorno Workspace: ${WORKSPACE}"
-                    //     }
-                    // }
+                    stage('Pruebas de SAS'){
+                        steps {
+                            echo "Variable de entorno Workspace: ${WORKSPACE}"
+                        }
+                        steps {
+                            echo "Variable de entorno Workspace ##################"
+                        }
+                    }
 
 
 
