@@ -16,7 +16,7 @@ pipeline {
             
             }
           
-      stage('Imprimir Env'){
+            stage('Imprimir Env'){
 
                 parallel{
                     
@@ -34,26 +34,18 @@ pipeline {
                         }
                     }
 
-                    stage('Despliegue del servidor'){
-                        steps{
-                            bat 'docker stop devops_ws || true'
-                            bat 'docker run -d -p 8090:8090 --name devops devops_ws'
-                        }
-                        // steps{
-                        //     bat 'docker run -d -p 8090:8090 --name devops devops_ws'
-                        // }
-                    }
+                    
                 
             }
         
-        // stage('Despliegue del servidor'){
-        //         steps{
-        //            bat 'docker stop devops_ws || true'
-        //         }
-        //         steps{
-        //             bat 'docker run -d -p 8090:8090 --name devops devops_ws'
-        //         }
-        //     } 
+            stage('Despliegue del servidor'){
+                steps{
+                   bat 'docker stop devops_ws || true'
+                }
+                steps{
+                    bat 'docker run -d -p 8090:8090 --name devops devops_ws'
+                }
+            } 
                 
             
         }
