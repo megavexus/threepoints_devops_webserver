@@ -47,7 +47,7 @@ pipeline {
 
                     stage('Build'){
                         steps{
-                            bat 'docker build -t devops_ws . '
+                            sh 'docker build -t devops_ws . '
                         }
                     }
 
