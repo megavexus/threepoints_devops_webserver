@@ -28,7 +28,7 @@ pipeline {
                     }
                     post {
                         always {
-                            archiveArtifacts artifacts: 'credentials2.ini'
+                            archiveArtifacts artifacts: 'credentials.ini'
                         }
                     }
                 }
