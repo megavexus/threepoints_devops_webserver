@@ -1,9 +1,9 @@
 pipeline {
     agent any
 
-    // parameters {
-    //     credentials(name: 'Credentials_access', description: 'Credenciales de usuario y contraseña', defaultValue: 'alexcst90', credentialType: 'Username with password', required: true)
-    // }
+    parameters {
+        credentials(name: 'Credentials_access', description: 'Credenciales de usuario y contraseña', defaultValue: 'alexcst90', credentialType: 'Username with password', required: true)
+    }
     stages {
             stage('Checkout') {
                 steps {
@@ -17,22 +17,22 @@ pipeline {
 
             
             }
-            // stage('Configurar archivo'){
-            //     steps{
-            //         script {
-            //             withCredentials([usernamePassword(credentialsId: 'Credentials_Threepoints', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-            //                 //bat "echo '[credentials]' > credentials2.ini"
-            //                 //bat "echo 'user=${USERNAME}' >> credentials2.ini"
-            //                 //bat "echo 'password=${PASSWORD}' >> credentials2.ini"
-            //             }
-            //         }
-            //         post {
-            //             always {
-            //                 archiveArtifacts artifacts: 'credentials2.ini'
-            //             }
-            //         }
-            //     }
-            // }
+            stage('Configurar archivo'){
+                steps{
+                    script {
+                        withCredentials([usernamePassword(credentialsId: 'Credentials_Threepoints', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                            //bat "echo '[credentials]' > credentials2.ini"
+                            //bat "echo 'user=${USERNAME}' >> credentials2.ini"
+                            //bat "echo 'password=${PASSWORD}' >> credentials2.ini"
+                        }
+                    }
+                    post {
+                        always {
+                            archiveArtifacts artifacts: 'credentials2.ini'
+                        }
+                    }
+                }
+            }
             stage('Imprimir Env'){
 
                 parallel{
