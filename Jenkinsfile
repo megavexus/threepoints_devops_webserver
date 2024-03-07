@@ -1,9 +1,7 @@
 pipeline {
     agent any
 
-    // parameters {
-    //     credentials(name: 'Credentials_access', description: 'Credenciales de usuario y contraseña', defaultValue: 'alexcst90', credentialType: 'Username with password', required: true)
-    // }
+  
     stages {
             stage('Checkout') {
                 steps {
@@ -17,43 +15,29 @@ pipeline {
 
             
             }
-            // stage('Configurar archivo'){
-            //     steps{
-            //         script {
-            //             withCredentials([usernamePassword(credentialsId: 'Credentials_Threepoints', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-            //                 //bat "echo '[credentials]' > credentials2.ini"
-            //                 //bat "echo 'user=${USERNAME}' >> credentials2.ini"
-            //                 //bat "echo 'password=${PASSWORD}' >> credentials2.ini"
-            //             }
-            //         }
-            //         post {
-            //             always {
-            //                 archiveArtifacts artifacts: 'credentials.ini'
-            //             }
-            //         }
-            //     }
-            // }
-            stage('Imprimir Env'){
-
-                parallel{
+          
+     
+            stage('Pruebas de SAS'){
+                steps {
                     
-                    stage('Pruebas de SAS'){
-                        steps {
-                            echo "Variable de entorno Workspace: ${WORKSPACE}"
-                        }
+                    withSonarQubeEnv('My SonarQube Server', envOnly: true) {
+                        // This expands the evironment variables SONAR_CONFIG_NAME, SONAR_HOST_URL, SONAR_AUTH_TOKEN that can be used by any script.
+                        println ${env.SONAR_HOST_URL} 
                     }
-
-
-
-                    stage('Build'){
-                        steps{
-                            bat 'docker build -t devops_ws . '
-                        }
-                    }
-
                 }
-                
             }
+
+
+
+            stage('Build'){
+                steps{
+                    bat 'docker build -t devops_ws . '
+                }
+            }
+
+                
+                
+            
         }
     }
 
