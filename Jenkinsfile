@@ -34,7 +34,7 @@ pipeline {
                             bat 'docker build -t devops_ws . '
                         }
                     }
-
+                }
                     
                 
             }
@@ -50,7 +50,7 @@ pipeline {
             } 
                 
             
-        }
+        
     }
 }
 
