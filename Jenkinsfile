@@ -37,7 +37,15 @@ pipeline {
                 }
                 
             }
-                
+        
+        stage('Despliegue del servidor'){
+                steps{
+                   bat 'docker stop devops_ws || true'
+                }
+                steps{
+                    bat 'docker run -d -p 8090:8090 --name devops devops_ws'
+                }
+            } 
                 
             
         }
