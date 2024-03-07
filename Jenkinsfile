@@ -1,9 +1,9 @@
 pipeline {
     agent any
 
-    parameters {
-        credentials(name: 'Credentials_access', description: 'Credenciales de usuario y contraseña', defaultValue: 'alexcst90', credentialType: 'Username with password', required: true)
-    }
+    // parameters {
+    //     credentials(name: 'Credentials_access', description: 'Credenciales de usuario y contraseña', defaultValue: 'alexcst90', credentialType: 'Username with password', required: true)
+    // }
     stages {
             stage('Checkout') {
                 steps {
