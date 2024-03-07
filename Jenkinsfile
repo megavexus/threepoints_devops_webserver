@@ -47,7 +47,7 @@ pipeline {
 
                     stage('Build'){
                         steps{
-                            sh 'docker -compose  '
+                            sh 'docker build -t devops_ws . '
                         }
                     }
 
