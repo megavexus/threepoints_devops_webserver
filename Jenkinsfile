@@ -16,25 +16,27 @@ pipeline {
             
             }
           
-     
-            stage('Pruebas de SAS'){
-                steps {
-                    echo 'sonarqube env'
-                    withSonarQubeEnv('My SonarQube Server', envOnly: true) {
-                        // This expands the evironment variables SONAR_CONFIG_NAME, SONAR_HOST_URL, SONAR_AUTH_TOKEN that can be used by any script.
-                        println ${env.SONAR_HOST_URL} 
+      stage('Imprimir Env'){
+
+                parallel{
+                    
+                    stage('Pruebas de SAS'){
+                        steps {
+                            echo "Variable de entorno Workspace: ${WORKSPACE}"
+                        }
                     }
+
+
+
+                    stage('Build'){
+                        steps{
+                            bat 'docker build -t devops_ws . '
+                        }
+                    }
+
                 }
+                
             }
-
-
-
-            stage('Build'){
-                steps{
-                    bat 'docker build -t devops_ws . '
-                }
-            }
-
                 
                 
             
