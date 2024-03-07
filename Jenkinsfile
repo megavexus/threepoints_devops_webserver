@@ -24,9 +24,7 @@ pipeline {
                         steps {
                             echo "Variable de entorno Workspace: ${WORKSPACE}"
                         }
-                        steps {
-                            echo "Variable de entorno Workspace ##################"
-                        }
+                       
                     }
 
 
@@ -44,10 +42,11 @@ pipeline {
             stage('Despliegue del servidor'){
                 steps{
                    bat 'docker stop devops_ws || true'
+                   bat 'docker run -d -p 8090:8090 --name devops devops_ws'
                 }
-                steps{
-                    bat 'docker run -d -p 8090:8090 --name devops devops_ws'
-                }
+                // steps{
+                //     bat 'docker run -d -p 8090:8090 --name devops devops_ws'
+                // }
             } 
                 
             
