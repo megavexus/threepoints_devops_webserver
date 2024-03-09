@@ -25,8 +25,10 @@ pipeline {
 
                     stage('Pruebas de SAS'){
                         steps {
-                            echo "Ejecucion de las pruebas de calidad de codigo."
-                            sonarAnalysis()
+                            timeout(time: 30000, unit: 'MILISECONDS'){
+                                    sonarAnalysis()
+                            }
+                           
 
                         }
                        

@@ -22,6 +22,7 @@ pipeline {
                     
                     stage('Pruebas de SAS'){
                         steps {
+                            
                             echo "Variable de entorno Workspace: ${WORKSPACE}"
                         }
                        
