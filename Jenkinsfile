@@ -1,49 +1,34 @@
 pipeline {
     agent any
 
-    environment {
-        USERNAME = credentials('alexander_usr')
-       // PASSWORD = credentials('alexander_pass')
-        // credentials(name: 'Credentials_access', description: 'Credenciales de usuario y contraseña', defaultValue: 'alexcst90', credentialType: 'Username with password', required: true)
-    }
+  
     stages {
-            // stage('Checkout') {
-            //     steps {
-            //         // Get some code from a GitHub repository
-            //         git 'https://github.com/alexcst90/threepoints_devops_webserver.git'
+            stage('Checkout') {
+                steps {
+                    // Get some code from a GitHub repository
+                    git 'https://github.com/alexcst90/threepoints_devops_webserver.git'
 
-            //         // Run Maven on a Unix agent.
-            //         //sh "mvn -Dmaven.test.failure.ignore=true clean package"
+                    // Run Maven on a Unix agent.
+                    //sh "mvn -Dmaven.test.failure.ignore=true clean package"
 
-            //     }
+                }
 
             
-            // }
-            stage('Configurar archivo'){
-                steps{
-                   
-                        withCredentials(bindings:[ssgUserPrivateKey(credentialsId: 'alexander_usr', keyFileVariable:'USERNAME')]){
-                            echo " 'user=${USERNAME}' >> credentials.ini.tpl" 
-                        }
-
-
-                        // withCredentials([usernamePassword(credentialsId: 'Credentials_Threepoints', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                        //     //bat "echo '[credentials]' > credentials.ini."
-                        //     //bat "echo 'user=${USERNAME}' >> credentials.ini"
-                        //     //bat "echo 'password=${PASSWORD}' >> credentials.ini"
-                        // }
-                    
-                   
-                }
             }
+          
+            @Library('my-libary')
             stage('Imprimir Env'){
 
                 parallel{
                     
+
                     stage('Pruebas de SAS'){
                         steps {
-                            echo "Variable de entorno Workspace: ${WORKSPACE}"
+                            echo "Ejecucion de las pruebas de calidad de codigo."
+                            call()
+
                         }
+                       
                     }
 
 
@@ -53,10 +38,29 @@ pipeline {
                             bat 'docker build -t devops_ws . '
                         }
                     }
-
                 }
+                    
                 
             }
-        }
+        
+            // stage('Despliegue del servidor'){
+            //     steps{
+            //        bat 'docker stop devops_ws || true'
+            //     //    bat 'docker run -d -p 8090:8090 --name devops devops_ws'
+            //     }
+            //     // steps{
+            //     //     bat 'docker run -d -p 8090:8090 --name devops devops_ws'
+            //     // }
+            // } 
+                
+            
+        
     }
+    // post{
+    //     always{
+    //        // bat 'docker stop devops_ws || true'
+    //         bat 'docker run -d -p 8090:8090 --name devops devops_ws'
+    //     }
+    // }
+}
 
