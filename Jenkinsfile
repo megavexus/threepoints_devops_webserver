@@ -5,16 +5,28 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Descarga de código
-                git 'https://github.com/mdeclementi/threepoints_devops_webserver.git'
+                git branch: 'master', credentialsId: 'gitJenkins', url: 'https://github.com/mdeclementi/threepoints_devops_webserver.git'
             }
         }
 
         stage('Pruebas de SAST') {
-            steps {
-                // Ejecución de pruebas de calidad de código
-                echo 'Ejecución de pruebas de SAST'
+        steps {
+            script {
+                  withSonarQubeEnv('SonarQubeTarea1') {
+                      sh """
+                        sonar-scanner \
+                        -Dsonar.projectKey=sonarqube \
+                        -Dsonar.sources=. \
+                        -Dsonar.login=sqa_a413ae3509c14988687d7bb1a9ca36370997bc5f
+                      """
+                    }
+                  timeout(time: 10, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: false
+                    }
+                }
             }
         }
+    }
 
         stage('Build') {
             steps {
