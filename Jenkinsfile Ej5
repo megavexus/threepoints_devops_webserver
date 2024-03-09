@@ -1,4 +1,3 @@
-@Library('my-libary')
 pipeline {
     agent any
 
@@ -17,17 +16,13 @@ pipeline {
             
             }
           
-            
             stage('Imprimir Env'){
 
                 parallel{
                     
-
                     stage('Pruebas de SAS'){
                         steps {
-                            echo "Ejecucion de las pruebas de calidad de codigo."
-                            call()
-
+                            echo "Variable de entorno Workspace: ${WORKSPACE}"
                         }
                        
                     }
@@ -36,8 +31,7 @@ pipeline {
 
                     stage('Build'){
                         steps{
-                            echo 'building...'
-                            // bat 'docker build -t devops_ws . '
+                            bat 'docker build -t devops_ws . '
                         }
                     }
                 }
@@ -58,11 +52,11 @@ pipeline {
             
         
     }
-    // post{
-    //     always{
-    //        // bat 'docker stop devops_ws || true'
-    //         bat 'docker run -d -p 8090:8090 --name devops devops_ws'
-    //     }
-    // }
+    post{
+        always{
+           // bat 'docker stop devops_ws || true'
+            bat 'docker run -d -p 8090:8090 --name devops devops_ws'
+        }
+    }
 }
 
