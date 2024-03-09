@@ -26,8 +26,6 @@ pipeline {
                 }
             }
         }
-    }
-
         stage('Build') {
             steps {
                 // Construcción del container de Docker
@@ -36,4 +34,7 @@ pipeline {
                 }
             }
         }
+    }
+
+        
     }
