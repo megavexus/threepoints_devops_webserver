@@ -26,7 +26,7 @@ pipeline {
                     stage('Pruebas de SAS'){
                         steps {
                             echo "Ejecucion de las pruebas de calidad de codigo."
-                            call()
+                            sonarAnalysis()
 
                         }
                        
