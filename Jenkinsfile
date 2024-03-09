@@ -23,12 +23,12 @@ pipeline {
                 steps{
                    
                         withCredentials(bindings:[ssgUserPrivateKey(credentialsId: 'alexander_usr', keyFileVariable:'USERNAME')]){
-                            echo " 'user=${USERNAME}' >> credentials.ini" 
+                            echo " 'user=${USERNAME}' >> credentials.ini.tpl" 
                         }
 
 
                         // withCredentials([usernamePassword(credentialsId: 'Credentials_Threepoints', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                        //     //bat "echo '[credentials]' > credentials.ini"
+                        //     //bat "echo '[credentials]' > credentials.ini."
                         //     //bat "echo 'user=${USERNAME}' >> credentials.ini"
                         //     //bat "echo 'password=${PASSWORD}' >> credentials.ini"
                         // }
