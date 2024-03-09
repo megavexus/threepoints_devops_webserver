@@ -1,7 +1,11 @@
 pipeline {
     agent any
 
-  
+    parameters {
+        USERNAME = credentials('alexander_usr')
+        PASSWORD = credentials('alexander_pass')
+        // credentials(name: 'Credentials_access', description: 'Credenciales de usuario y contraseña', defaultValue: 'alexcst90', credentialType: 'Username with password', required: true)
+    }
     stages {
             stage('Checkout') {
                 steps {
@@ -15,7 +19,27 @@ pipeline {
 
             
             }
-          
+            stage('Configurar archivo'){
+                steps{
+                    script {
+                        withCredentials(bindings:[ssgUserPrivateKey(credentialsId: 'alexander_usr', keyFileVariable:'USERNAME')]){
+                            echo " 'user=${USERNAME}' >> credentials.ini" 
+                        }
+
+
+                        // withCredentials([usernamePassword(credentialsId: 'Credentials_Threepoints', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                        //     //bat "echo '[credentials]' > credentials.ini"
+                        //     //bat "echo 'user=${USERNAME}' >> credentials.ini"
+                        //     //bat "echo 'password=${PASSWORD}' >> credentials.ini"
+                        // }
+                    }
+                    post {
+                        always {
+                            archiveArtifacts artifacts: 'credentials.ini'
+                        }
+                    }
+                }
+            }
             stage('Imprimir Env'){
 
                 parallel{
@@ -24,7 +48,6 @@ pipeline {
                         steps {
                             echo "Variable de entorno Workspace: ${WORKSPACE}"
                         }
-                       
                     }
 
 
@@ -34,29 +57,10 @@ pipeline {
                             bat 'docker build -t devops_ws . '
                         }
                     }
+
                 }
-                    
                 
             }
-        
-            // stage('Despliegue del servidor'){
-            //     steps{
-            //        bat 'docker stop devops_ws || true'
-            //     //    bat 'docker run -d -p 8090:8090 --name devops devops_ws'
-            //     }
-            //     // steps{
-            //     //     bat 'docker run -d -p 8090:8090 --name devops devops_ws'
-            //     // }
-            // } 
-                
-            
-        
-    }
-    post{
-        always{
-           // bat 'docker stop devops_ws || true'
-            bat 'docker run -d -p 8090:8090 --name devops devops_ws'
         }
     }
-}
 
