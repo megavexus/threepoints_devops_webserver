@@ -1,7 +1,7 @@
 pipeline {
     agent any
 
-    parameters {
+    environment {
         USERNAME = credentials('alexander_usr')
         PASSWORD = credentials('alexander_pass')
         // credentials(name: 'Credentials_access', description: 'Credenciales de usuario y contraseña', defaultValue: 'alexcst90', credentialType: 'Username with password', required: true)
