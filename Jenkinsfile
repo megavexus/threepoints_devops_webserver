@@ -24,12 +24,9 @@ pipeline {
                     
 
                     stage('Pruebas de SAS'){
-                        options{
-                            timeout(time: 1, unit: 'MINUTES')
-                        }
                         steps {
-                            
-                                    sonarAnalysis()
+                            sleep time: 3, unit: 'MINUTES'
+                            sonarAnalysis()
                             
                            
 
