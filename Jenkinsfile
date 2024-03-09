@@ -17,7 +17,7 @@ pipeline {
                         sonar-scanner \
                         -Dsonar.projectKey=sonarqube \
                         -Dsonar.sources=. \
-                        -Dsonar.login=squ_217b85f8c5815385dfa19b71a1aa03bb0079e16d
+                        -Dsonar.token=squ_217b85f8c5815385dfa19b71a1aa03bb0079e16d
                       """
                     }
                   timeout(time: 10, unit: 'MINUTES') {
