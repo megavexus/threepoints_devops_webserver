@@ -12,7 +12,7 @@ pipeline {
         stage('Pruebas de SAST') {
         steps {
             script {
-                  withSonarQubeEnv('sonar-scanner') {
+                  withSonarQubeEnv('Sonar Local') {
                       sh """
                         sonar-scanner \
                         -Dsonar.projectKey=sonarqube \
