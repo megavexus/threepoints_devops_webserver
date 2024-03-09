@@ -14,7 +14,7 @@ pipeline {
             script {
                   withSonarQubeEnv('Sonar Local') {
                       sh """
-                        sonar-scanner \
+                        Sonar Local \
                         -Dsonar.projectKey=sonarqube \
                         -Dsonar.sources=. \
                         -Dsonar.login=sqa_a413ae3509c14988687d7bb1a9ca36370997bc5f
