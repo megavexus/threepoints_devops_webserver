@@ -25,7 +25,7 @@ pipeline {
 
                     stage('Pruebas de SAS'){
                         steps {
-                            sleep time: 3, unit: 'MINUTES'
+                            
                             sonarAnalysis()
                             
                            
