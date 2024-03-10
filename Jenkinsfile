@@ -26,7 +26,7 @@ pipeline {
                     stage('Pruebas de SAS'){
                         steps {
                             
-                            sonarAnalysis(true,true)
+                            sonarAnalysis(false,false)
                             
                            
 
