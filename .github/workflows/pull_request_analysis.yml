@@ -1,4 +1,4 @@
-name: Your Workflow Name
+name: pull rama
 
 on:
   pull_request:
