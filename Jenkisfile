@@ -1,0 +1,37 @@
+stages:
+  - build
+  - test
+  - deploy
+
+variables:
+  # Define tus variables aquí
+
+before_script:
+  # Configuración común antes de ejecutar el pipeline
+
+build_job:
+  stage: build
+  script:
+    - # Comandos para construir tu aplicación
+  only:
+    - master
+    - /^feature-.*$/
+    - /^hotfix-.*$/
+
+test_job:
+  stage: test
+  script:
+    - # Comandos para ejecutar pruebas
+  only:
+    - master
+    - /^feature-.*$/
+    - /^hotfix-.*$/
+
+deploy_job:
+  stage: deploy
+  script:
+    - # Comandos para implementar o desplegar tu aplicación
+  only:
+    - master
+    - /^feature-.*$/
+    - /^hotfix-.*$/
