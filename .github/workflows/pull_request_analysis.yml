@@ -11,7 +11,12 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2 # Update to the latest version if available
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3 # Update to the latest version if available
+        with:
+          node-version: '20'
 
       - name: Verificar existencia de allow_pull_request.txt
         run: |
@@ -36,15 +41,10 @@ jobs:
             exit 1
           fi
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20'
-
       - name: Crear archivo de credenciales
         run: echo "[credentials]" > credentials.ini && echo "username=${{ secrets.USERNAME }}" >> credentials.ini && echo "password=${{ secrets.PASSWORD }}" >> credentials.ini
 
-      - name: Pruebas de SAST
+      - name: Pruebas de SAST BALDO
         run: echo "Ejecución de pruebas de SAST"
 
       - name: Build Docker image
