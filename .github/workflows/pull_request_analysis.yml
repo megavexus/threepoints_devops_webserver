@@ -1,7 +1,7 @@
 name: pull rama
 
 on:
-  pull_request:
+  pull:
     branches:
       - master
 
