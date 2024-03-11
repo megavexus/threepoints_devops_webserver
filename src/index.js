@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
 
 const port = process.env.PORT || 8090;
 app.listen(port, () => {
-  console.log(`helloworld: listening on port s${port}`);
+  console.log(`helloworld: listening on port aaaaas${port}`);
 });
 // [END run_helloworld_service]
 // [END cloudrun_helloworld_service]
