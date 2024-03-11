@@ -3,7 +3,7 @@ name: Your Workflow Name
 on:
   pull_request:
     branches:
-      - main
+      - master
 
 jobs:
   build:
