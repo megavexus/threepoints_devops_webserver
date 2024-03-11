@@ -1,53 +1,37 @@
-pipeline {
-    agent any
+stages:
+  - build
+  - test
+  - deploy
 
-    stages {
-        stage('Checkout') {
-            steps {
-                script {
-                    echo 'Checking out code...'
-                    git 'https://Baldo15@github.com/Baldo15/threepoints_devops_webserver.git'
-                }
-            }
-        }
+variables:
+  # Define tus variables aquí
 
-        stage('Pruebas de SAST') {
-            steps {
-                script {
-                    echo 'Ejecución de pruebas de SAST'
-                    // Puedes incluir comandos para ejecutar pruebas de SAST (mockeadas en este ejemplo)
-                }
-            }
-        }
+before_script:
+  # Configuración común antes de ejecutar el pipeline
 
-        stage('Imprimir Env') {
-            parallel {
-                stage('Imprimir WORKSPACE') {
-                    steps {
-                        script {
-                            echo "Path del WORKSPACE: ${env.WORKSPACE}"
-                        }
-                    }
-                }
+build_job:
+  stage: build
+  script:
+    - # Comandos para construir tu aplicación
+  only:
+    - master
+    - /^feature-.*$/
+    - /^hotfix-.*$/
 
-                stage('Otro paso paralelo') {
-                    steps {
-                        script {
-                            echo 'Ejecutando otro paso paralelo...'
-                            // Agrega comandos adicionales si es necesario
-                        }
-                    }
-                }
-            }
-        }
+test_job:
+  stage: test
+  script:
+    - # Comandos para ejecutar pruebas
+  only:
+    - master
+    - /^feature-.*$/
+    - /^hotfix-.*$/
 
-        stage('Build') {
-            steps {
-                script {
-                    echo 'Construyendo el contenedor de Docker...'
-                    sh 'docker build -t devops_ws .'
-                }
-            }
-        }
-    }
-}
+deploy_job:
+  stage: deploy
+  script:
+    - # Comandos para implementar o desplegar tu aplicación
+  only:
+    - master
+    - /^feature-.*$/
+    - /^hotfix-.*$/
