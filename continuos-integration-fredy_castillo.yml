@@ -1,0 +1,4 @@
+name: Ejecucion de un pipeline basico
+on:
+  push:
+    branches: [ master ]
