@@ -1,4 +1,10 @@
 name: Ejecucion de un pipeline basico
+
+env:
+  USERNAME: '${{secrets.USERNAME}}'
+  PASSWORD: '${{secrets.PASSWORD}}'
+run: envsubst
 on:
   push:
-    branches: [ master ]
+    branches: 
+      - 'master'
