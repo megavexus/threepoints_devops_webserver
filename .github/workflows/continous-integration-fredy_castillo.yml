@@ -2,7 +2,7 @@ name: Ejecucion de un pipeline basico
 on:
   workflow_dispatch:
 env:
-  env_var: ${{ env.TEST_VAR }}
+  env_var: $env.TEST_VAR
 
 jobs:
   display-variables:
@@ -11,6 +11,6 @@ jobs:
     steps:
       - name: Is productive branch
         run:
-          echo "branch"
+          echo "branch"+env_var
 #jobs:
  # runs-on: ubuntu-latest
