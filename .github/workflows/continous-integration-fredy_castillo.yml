@@ -1,14 +1,13 @@
 name: Ejecucion de un pipeline basico
-
-#env:
-  #USERNAME: '${{secrets.USERNAME}}'
-  #PASSWORD: '${{secrets.PASSWORD}}'
-  #run: envsubst
-
 on:
-  push:
-    branches: 
-      - 'master'
+  workflow_dispatch:
+env:
+  env_var: ${{ secret.USERNAME }}
+
+jobs:
+  display-variables:
+    name: ${{ secret.USERNAME }}
+    runs-on: ubuntu-latest
 
 #jobs:
  # runs-on: ubuntu-latest
