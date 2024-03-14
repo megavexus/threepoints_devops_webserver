@@ -8,6 +8,9 @@ jobs:
   display-variables:
     name: ${{ secret.USERNAME }}
     runs-on: ubuntu-latest
-
+    steps:
+      - name: Is productive branch
+        run:
+          echo "branch"
 #jobs:
  # runs-on: ubuntu-latest
