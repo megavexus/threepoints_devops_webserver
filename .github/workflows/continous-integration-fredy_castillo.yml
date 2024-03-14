@@ -2,11 +2,11 @@ name: Ejecucion de un pipeline basico
 on:
   workflow_dispatch:
 env:
-  env_var: ${{ secret.USERNAME }}
+  env_var: ${{ env.TEST_VAR }}
 
 jobs:
   display-variables:
-    name: ${{ secret.USERNAME }}
+    name: ${{ env.TEST_VAR }}
     runs-on: ubuntu-latest
     steps:
       - name: Is productive branch
