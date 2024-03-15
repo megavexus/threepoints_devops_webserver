@@ -18,7 +18,7 @@ jobs:
           echo "“Ejecución de pruebas de SAST"
       - name: creacion de archivo de credenciales
         run:
-          envsubst < credentials.ini.tpl > credentials.ini
+          envsubst < ./credentials.ini.tpl > credentials.ini
           #cp ./credentials.ini.tpl credentials.ini &&
           #sed -i 's/username/${{ secrets.USERNAME }}/g' credentials.ini
           
