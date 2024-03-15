@@ -6,8 +6,7 @@ on:
   workflow_dispatch:
 env:
   env_var: ${{ vars.TEST_VAR }}
-  USERNAME: ${{ secrets.USERNAME  }}
-  PASSWORD: ${{ secrets.PASSWORD  }}
+ 
 jobs:
   display-variables:
     name: env_var
@@ -18,7 +17,11 @@ jobs:
           echo "“Ejecución de pruebas de SAST"
       - uses: actions/checkout@master
       - name: creacion de archivo de credenciales
-        uses: actions/envsubst@v1
+      - uses: mshick/fast-envsubst@v1
+        #uses: actions/envsubst@v1
+        env:
+           USERNAME: ${{ secrets.USERNAME  }}
+           PASSWORD: ${{ secrets.PASSWORD  }}
         with:
           input: ./credentials.ini.tpl
           output: ./credentials.ini
