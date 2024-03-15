@@ -1,5 +1,8 @@
 name: Ejecucion de un pipeline basico
 on:
+  push:
+    branches:
+      - 'master'
   workflow_dispatch:
 env:
   env_var: ${{ vars.TEST_VAR }}
