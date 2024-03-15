@@ -11,6 +11,6 @@ jobs:
     steps:
       - name: Is productive branch
         run:
-          echo "branch"+${{environment.TEST_VAR}}
+          echo "branch"+$env.env_var
 #jobs:
  # runs-on: ubuntu-latest
