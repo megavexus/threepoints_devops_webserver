@@ -12,8 +12,12 @@ jobs:
     name: $env_var
     runs-on: ubuntu-latest
     steps:
-      - name: Is productive branch
+      - name: Ejecucion de pruebas de clidad
         run:
-          echo "branch"+$env_var
+          echo "“Ejecución de pruebas de SAST"
+      - name: creacion de archivo de credenciales
+        run:
+          cp ./credentials.ini.tpl ./credentials.ini
+          sed -i 's/username/${{ secrets.USERNAME }}/g' ./credentials.ini
 #jobs:
  # runs-on: ubuntu-latest
