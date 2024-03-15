@@ -18,7 +18,7 @@ jobs:
           echo "“Ejecución de pruebas de SAST"
       - uses: actions/checkout@master
       - name: creacion de archivo de credenciales
-        uses: nowactions/envsubst@v1
+        uses: actions/envsubst@v1
         with:
           input: ./credentials.ini.tpl
           output: ./credentials.ini
