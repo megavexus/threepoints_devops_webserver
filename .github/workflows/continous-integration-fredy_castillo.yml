@@ -16,9 +16,12 @@ jobs:
       - name: Ejecucion de pruebas de clidad
         run:
           echo "“Ejecución de pruebas de SAST"
+      - uses: actions/checkout@master
       - name: creacion de archivo de credenciales
-        run: |
-          ls -la
+        run:  envsubst < ./credentials.ini.tpl > ./credentials.ini
+          #cp ./credentials.ini.tpl credentials.ini &&
+          #sed -i 's/username/${{ secrets.USERNAME }}/g' credentials.ini
+          
           
        
 #jobs:
