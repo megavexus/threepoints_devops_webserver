@@ -2,7 +2,7 @@ name: Ejecucion de un pipeline basico
 on:
   workflow_dispatch:
 env:
-  env_var: $TEST_VAR
+  env_var: ${{ vars.TEST_VAR }}
 
 jobs:
   display-variables:
