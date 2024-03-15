@@ -22,9 +22,9 @@ jobs:
         env:
            USERNAME: ${{ secrets.USERNAME  }}
            PASSWORD: ${{ secrets.PASSWORD  }}
-        with:
-          in-file: ./credentials.ini.tpl
-          out-file: ./credentials.ini
+        with: #INPUT_IN-FILE" -e "INPUT_OUT-FILE"INPUT_IN-FILE" -e "INPUT_OUT-FILE"
+          INPUT_IN-FILE: ./credentials.ini.tpl
+          INPUT_OUT-FILE: ./credentials.ini
         #run:  envsubst < credentials.ini.tpl > credentials.ini
           #cp ./credentials.ini.tpl credentials.ini &&
           #sed -i 's/username/${{ secrets.USERNAME }}/g' credentials.ini
