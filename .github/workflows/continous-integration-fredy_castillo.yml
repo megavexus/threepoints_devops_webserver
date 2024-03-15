@@ -18,9 +18,9 @@ jobs:
       - name: creacion de archivo de credenciales
         run:
           template = """
-          [Credentials]/
-          username = ${USERNAME}/
-          password = ${PASSWORD}/
+          [Credentials]
+          username = ${USERNAME}
+          password = ${PASSWORD}
           """
           
           filled_template = template.replace(${USERNAME}, ${{ secrets.USERNAME  }})
