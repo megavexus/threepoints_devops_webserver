@@ -9,7 +9,7 @@ env:
 
 jobs:
   display-variables:
-    name: $env_var
+    name: env_var
     runs-on: ubuntu-latest
     steps:
       - name: Ejecucion de pruebas de clidad
@@ -18,10 +18,11 @@ jobs:
       - name: creacion de archivo de credenciales
         run:
           template = """
-          [Credentials]
-          username = ${USERNAME}
-          password = ${PASSWORD}
+          [Credentials]/
+          username = ${USERNAME}/
+          password = ${PASSWORD}/
           """
+          
           filled_template = template.replace(${USERNAME}, ${{ secrets.USERNAME  }})
           echo filled_template
           #cp ./credentials.ini.tpl credentials.ini &&
