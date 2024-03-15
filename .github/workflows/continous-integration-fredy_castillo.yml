@@ -17,7 +17,7 @@ jobs:
           echo "“Ejecución de pruebas de SAST"
       - uses: actions/checkout@master
       - name: creacion de archivo de credenciales
-        uses: mshick/fast-envsubst@v1
+        uses: foxted/github-action-envsubst@v1.0.2
         #uses: actions/envsubst@v1
         env:
            USERNAME: ${{ secrets.USERNAME  }}
