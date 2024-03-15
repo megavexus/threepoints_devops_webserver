@@ -17,14 +17,14 @@ jobs:
           echo "“Ejecución de pruebas de SAST"
       - uses: actions/checkout@master
       - name: creacion de archivo de credenciales
-        uses: foxted/github-action-envsubst@v1.0.2
+        uses: nowactions/envsubst@v1
         #uses: actions/envsubst@v1
         env:
            USERNAME: ${{ secrets.USERNAME  }}
            PASSWORD: ${{ secrets.PASSWORD  }}
         with: #INPUT_IN-FILE" -e "INPUT_OUT-FILE"INPUT_IN-FILE" -e "INPUT_OUT-FILE"
-          INPUT_IN-FILE: ./credentials.ini.tpl
-          INPUT_OUT-FILE: ./credentials.ini
+          input: ./credentials.ini.tpl
+          output: ./credentials.ini
         #run:  envsubst < credentials.ini.tpl > credentials.ini
           #cp ./credentials.ini.tpl credentials.ini &&
           #sed -i 's/username/${{ secrets.USERNAME }}/g' credentials.ini
