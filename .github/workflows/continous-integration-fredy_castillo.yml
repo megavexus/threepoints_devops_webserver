@@ -6,11 +6,11 @@ env:
 
 jobs:
   display-variables:
-    name: $TEST_VAR
+    name: ${{env.TEST_VAR}}
     runs-on: ubuntu-latest
     steps:
       - name: Is productive branch
         run:
-          echo "branch"+env_var
+          echo "branch"+${{environment.TEST_VAR}}
 #jobs:
  # runs-on: ubuntu-latest
