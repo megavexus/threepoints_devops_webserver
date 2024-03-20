@@ -28,4 +28,10 @@ jobs:
 
         -
           name: Build docker image
-          run: docker build -t devops_ws .
+          uses: docker/build-push-action@v4
+          with:
+            context: .
+            file: ./Dockerfile
+            push: true
+            tags: myimage:latest
+            outputs: type=docker,dest=/tmp/myimage.tar
