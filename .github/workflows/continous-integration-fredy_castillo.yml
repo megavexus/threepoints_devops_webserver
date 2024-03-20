@@ -25,7 +25,7 @@ jobs:
       - name: create file
         id: file_created
         run : |
-          if [credentials.ini ]; then
+          if [ -f credentials.ini ]; then
             echo "archivo ya existe"
           else
             sed -e "s/\${USERNAME}/${USERNAME}/g" -e "s/\${PASSWORD}/${PASSWORD}/g" credentials.ini.tpl > credentials.ini
