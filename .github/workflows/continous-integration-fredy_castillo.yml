@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - 'master'
+      - 'feature*'
+      - 'hotfix*'
   workflow_dispatch:
 env:
   env_var: ${{ vars.TEST_VAR }}
