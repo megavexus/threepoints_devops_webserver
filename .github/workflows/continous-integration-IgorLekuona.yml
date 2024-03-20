@@ -21,15 +21,13 @@ jobs:
             content: |
               USERNAME = ${{ secrets.USERNAME }}
               PASSWORD = ${{ secrets.PASSWORD }}
-        # -
-        #   name: Set up Docker Buildx
-        #   uses: docker/setup-buildx-action@v3
         -
           name: Build docker image
-          uses: docker/build-push-action@v5
-          with:
-            context: .
-            file: Dockerfile
-            push: true
-            tags: myimage:latest
-            outputs: type=docker,dest=/tmp/myimage.tar
+          run: docker build --file Dockerfile -t devops_ws .
+          # uses: docker/build-push-action@v5
+          # with:
+          #   context: .
+          #   file: Dockerfile
+          #   push: true
+          #   tags: myimage:latest
+          #   outputs: type=docker,dest=/tmp/myimage.tar
