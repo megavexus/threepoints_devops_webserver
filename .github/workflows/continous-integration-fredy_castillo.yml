@@ -9,7 +9,7 @@ env:
  
 jobs:
   display-variables:
-    name: env_var
+    name: ${env_var}
     runs-on: ubuntu-latest
     steps:
       - name: Ejecucion de pruebas de clidad
@@ -35,7 +35,11 @@ jobs:
           git add credentials.ini
           git commit -m "Update credentials.ini"
           git push
-        
+
+      - name: Build docker image
+        run: |
+          docker build -t devops_ws . --tag devops_ws_:$(date +%s)
+          
         #run:  envsubst < credentials.ini.tpl > credentials.ini
           #cp ./credentials.ini.tpl credentials.ini &&
           #sed -i 's/username/${{ secrets.USERNAME }}/g' credentials.ini
