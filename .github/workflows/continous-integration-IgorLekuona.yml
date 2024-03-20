@@ -1,0 +1,31 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - 'master'
+
+jobs:
+  docker:
+      runs-on: ubuntu-latest
+      steps:
+        -
+          name: Pruebas de SAST
+          run: echo 'Ejecución de pruebas de SAST'
+        -
+          name: Creación de credenciales
+          # uses: 1arp/create-a-file-action@0.4.4
+          # with:
+          #   path: './github/workflows'
+          #   file: 'credentials.ini'
+          #   content: |
+          #     USERNAME = '${{ secrets.USERNAME }}'
+          #     PASSWORD = '${{ secrets.PASSWORD }}'
+          env:
+            USERNAME = '${{ secrets.USERNAME }}'
+            PASSWORD = '${{ secrets.PASSWORD }}'
+          run: envsubst < credentials.ini.tpl > credentials.ini
+
+        -
+          name: Build docker image
+          run: docker build -t devops_ws . --tag devops_ws_:$(date +%s)
