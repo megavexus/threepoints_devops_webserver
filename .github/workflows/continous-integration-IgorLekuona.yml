@@ -17,7 +17,7 @@ jobs:
           id: extract_branch
         -
           name: Check source branch
-          run: echo ${{ steps.extract_branch.outputs.branch }}
+          # run: echo ${{ steps.extract_branch.outputs.branch }}
           if: ${{ steps.extract_branch.outputs.branch }} != 'master' || !(contains(${{ steps.extract_branch.outputs.branch }}, 'feature')) || !(contains(${{ steps.extract_branch.outputs.branch }}, 'hotfix'))
           run: exit -1
         -
