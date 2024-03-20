@@ -27,6 +27,7 @@ jobs:
         run : |
           if [ -f credentials.ini ]; then
             echo "archivo ya existe"
+            echo "::set-output name=file_exists::true"
           else
             sed -e "s/\${USERNAME}/${USERNAME}/g" -e "s/\${PASSWORD}/${PASSWORD}/g" credentials.ini.tpl > credentials.ini
           fi      
@@ -35,6 +36,7 @@ jobs:
           PASSWORD: ${{ secrets.PASSWORD }}
 
       - name: commit changues
+        if: steps.file_created.outputs.file_exists != 'true'
         run: |
           git config --local user.email "a.cmejia10@gmail.com"
           git config --local user.name "alexcst90"
