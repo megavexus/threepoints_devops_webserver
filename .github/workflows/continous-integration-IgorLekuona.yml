@@ -18,8 +18,8 @@ jobs:
         -
           name: Check source branch
           run: echo ${{ steps.extract_branch.outputs.branch }}
-          # if: github.ref != 'master' || !(contains(github.ref, 'feature')) || !(contains(github.ref, 'hotfix'))
-          # run: exit -1
+          if: ${{ steps.extract_branch.outputs.branch }} != 'master' || !(contains(${{ steps.extract_branch.outputs.branch }}, 'feature')) || !(contains(${{ steps.extract_branch.outputs.branch }}, 'hotfix'))
+          run: exit -1
         -
           name: Pruebas de SAST
           run: echo 'Ejecución de pruebas de SAST'
