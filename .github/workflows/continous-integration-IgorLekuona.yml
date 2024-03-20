@@ -7,13 +7,19 @@ on:
 
 jobs:
   docker:
-      if: github.ref == 'master' || contains(github.ref, 'feature') || contains(github.ref, 'hotfix')
+      # if: github.ref == 'master' || contains(github.ref, 'feature') || contains(github.ref, 'hotfix')
       runs-on: ubuntu-latest
       steps:
-        # -
-        #   name: Check source branch
-        #   if: github.ref != 'master' || !(contains(github.ref, 'feature')) || !(contains(github.ref, 'hotfix'))
-        #   run: exit -1
+        - 
+          name: Extract branch name
+          shell: bash
+          run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+          id: extract_branch
+        -
+          name: Check source branch
+          run: echo ${{ steps.extract_branch.outputs.branch }}
+          # if: github.ref != 'master' || !(contains(github.ref, 'feature')) || !(contains(github.ref, 'hotfix'))
+          # run: exit -1
         -
           name: Pruebas de SAST
           run: echo 'Ejecución de pruebas de SAST'
