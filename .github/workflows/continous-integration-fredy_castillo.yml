@@ -14,17 +14,28 @@ jobs:
     steps:
       - name: Ejecucion de pruebas de clidad
         run:
-          echo "“Ejecución de pruebas de SAST"
+          echo "Ejecución de pruebas de SAST"
       - uses: actions/checkout@master
       - name: creacion de archivo de credenciales
-        uses: nowactions/envsubst@v1
-        #uses: actions/envsubst@v1
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: create file
+        run : |
+          sed -e "s/\${USERNAME}/${USERNAME}/g" -e "s/\${PASSWORD}/${PASSWORD}/g" credentials.ini.tpl > credentials.ini
         env:
-           USERNAME: ${{ secrets.USERNAME  }}
-           PASSWORD: ${{ secrets.PASSWORD  }}
-        with: #INPUT_IN-FILE" -e "INPUT_OUT-FILE"INPUT_IN-FILE" -e "INPUT_OUT-FILE"
-          input: credentials.ini.tpl
-          output: credentials.ini
+          USERNAME: ${{ secrets.USERNAME }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+
+      - name: commit changues
+        run: |
+          git config --local user.email "a.cmejia10@gmail.com"
+          git config --local user.name "alexcst90"
+          git add credentials.ini
+          git commit -m "Update credentials.ini"
+          git push
+        
         #run:  envsubst < credentials.ini.tpl > credentials.ini
           #cp ./credentials.ini.tpl credentials.ini &&
           #sed -i 's/username/${{ secrets.USERNAME }}/g' credentials.ini
