@@ -7,12 +7,13 @@ on:
 
 jobs:
   docker:
+      if: github.ref == 'master' || contains(github.ref, 'feature') || contains(github.ref, 'hotfix')
       runs-on: ubuntu-latest
       steps:
-        -
-          name: Check source branch
-          if: github.ref != 'master' || !(contains(github.ref, 'feature')) || !(contains(github.ref, 'hotfix'))
-          run: exit -1
+        # -
+        #   name: Check source branch
+        #   if: github.ref != 'master' || !(contains(github.ref, 'feature')) || !(contains(github.ref, 'hotfix'))
+        #   run: exit -1
         -
           name: Pruebas de SAST
           run: echo 'Ejecución de pruebas de SAST'
