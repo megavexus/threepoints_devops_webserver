@@ -19,11 +19,11 @@ jobs:
           name: Check branch master
           # run: echo ${{ steps.extract_branch.outputs.branch }}
           if: ${{ steps.extract_branch.outputs.branch != 'master' }}
-          # || !(contains(${{ steps.extract_branch.outputs.branch }}, 'feature')) || !(contains(${{ steps.extract_branch.outputs.branch }}, 'hotfix'))
+          # !(contains(${{ steps.extract_branch.outputs.branch }}, 'hotfix'))
           run: exit -1
         -
           name: Check branch feature
-          if: ${{ !(contains( steps.extract_branch.outputs.branch , 'feature' ) }}
+          if: ${{ !(contains( steps.extract_branch.outputs.branch , 'feature' )) }}
           run: exit -1
         -
           name: Pruebas de SAST
