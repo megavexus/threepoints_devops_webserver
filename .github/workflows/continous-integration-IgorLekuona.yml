@@ -17,14 +17,13 @@ jobs:
           id: extract_branch
         -
           name: Check branch master
-          # run: echo ${{ steps.extract_branch.outputs.branch }}
-          if: ${{ steps.extract_branch.outputs.branch != 'master' }}
+          if: ${{ steps.extract_branch.outputs.branch != 'master' || !(contains( steps.extract_branch.outputs.branch , 'feature' )) }}
           # !(contains(${{ steps.extract_branch.outputs.branch }}, 'hotfix'))
           run: exit -1
-        -
-          name: Check branch feature
-          if: ${{ !(contains( steps.extract_branch.outputs.branch , 'feature' )) }}
-          run: exit -1
+        # -
+        #   name: Check branch feature
+        #   if: ${{  }}
+        #   run: exit -1
         -
           name: Pruebas de SAST
           run: echo 'Ejecución de pruebas de SAST'
