@@ -14,17 +14,17 @@ jobs:
           run: echo 'Ejecución de pruebas de SAST'
         -
           name: Creación de credenciales
-          # uses: 1arp/create-a-file-action@0.4.4
-          # with:
-          #   path: './github/workflows'
-          #   file: 'credentials.ini'
-          #   content: |
-          #     USERNAME = ${{ secrets.USERNAME }}
-          #     PASSWORD = ${{ secrets.PASSWORD }}
-          env:
-            USERNAME = '${{ secrets.USERNAME }}' |
-            PASSWORD = '${{ secrets.PASSWORD }}'
-          run: envsubst < credentials.ini.tpl > credentials.ini
+          uses: 1arp/create-a-file-action@0.4.4
+          with:
+            path: './github/workflows'
+            file: 'credentials.ini'
+            content: |
+              USERNAME = ${{ secrets.USERNAME }}
+              PASSWORD = ${{ secrets.PASSWORD }}
+          # env:
+          #   USERNAME = '${{ secrets.USERNAME }}' |
+          #   PASSWORD = '${{ secrets.PASSWORD }}'
+          # run: envsubst < credentials.ini.tpl > credentials.ini
 
         -
           name: Build docker image
