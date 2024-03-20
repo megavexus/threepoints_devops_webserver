@@ -22,7 +22,7 @@ jobs:
           #     USERNAME = ${{ secrets.USERNAME }}
           #     PASSWORD = ${{ secrets.PASSWORD }}
           env:
-            USERNAME = '${{ secrets.USERNAME }}'
+            USERNAME = '${{ secrets.USERNAME }}' |
             PASSWORD = '${{ secrets.PASSWORD }}'
           run: envsubst < credentials.ini.tpl > credentials.ini
 
