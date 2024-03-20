@@ -24,10 +24,12 @@ jobs:
 
       - name: Evaluar pull request
         if: steps.file_created.outputs.allow_pull == 'true'
-          echo "Permitiendo pull request"
+        run:
+            echo "Permitiendo pull request"
           
       - name: Evaluamos si es false
         if: steps.file_created.outputs.allow_pull == 'false'
+        run:
           echo "Build fallida. Impidiendo Pull Request"
           exit 1
 
