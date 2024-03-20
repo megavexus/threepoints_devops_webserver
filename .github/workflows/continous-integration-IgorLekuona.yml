@@ -14,13 +14,13 @@ jobs:
           run: echo 'Ejecución de pruebas de SAST'
         -
           name: Creación de credenciales
-          uses: 1arp/create-a-file-action@0.4.4
+          - name: Overwrite file
+          uses: "DamianReeves/write-file-action@master"
           with:
-            path: './config'
-            file: 'credentials.ini'
-            content: |
-              USERNAME = ${{ secrets.USERNAME }}
-              PASSWORD = ${{ secrets.PASSWORD }}
+            path: ${{env.home}}/.config/credentials.ini
+            write-mode: overwrite
+            contents: |
+              USERNAME = ${{ secrets.USERNAME }} , PASSWORD = ${{ secrets.PASSWORD }}
         -
           uses: actions/checkout@v3
         -
