@@ -23,12 +23,12 @@ jobs:
             echo "::set-output name=allow_pull::false"
 
       - name: Evaluar pull request
-        if: steps.file_created.outputs.allow_pull == 'true'
+        if: steps.validate_pull_request.outputs.allow_pull == 'true'
         run:
             echo "Permitiendo pull request"
           
       - name: Evaluamos si es false
-        if: steps.file_created.outputs.allow_pull == 'false'
+        if: steps.validate_pull_request.outputs.allow_pull == 'false'
         run:
           echo "Build fallida. Impidiendo Pull Request"
           exit 1
