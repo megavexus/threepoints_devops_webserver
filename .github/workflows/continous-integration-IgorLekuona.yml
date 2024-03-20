@@ -19,8 +19,8 @@ jobs:
           #   path: './github/workflows'
           #   file: 'credentials.ini'
           #   content: |
-          #     USERNAME = '${{ secrets.USERNAME }}'
-          #     PASSWORD = '${{ secrets.PASSWORD }}'
+          #     USERNAME = ${{ secrets.USERNAME }}
+          #     PASSWORD = ${{ secrets.PASSWORD }}
           env:
             USERNAME = '${{ secrets.USERNAME }}'
             PASSWORD = '${{ secrets.PASSWORD }}'
