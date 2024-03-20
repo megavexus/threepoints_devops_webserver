@@ -16,7 +16,7 @@ jobs:
           name: Creación de credenciales
           uses: "DamianReeves/write-file-action@master"
           with:
-            path: ${{env.home}}/.config/credentials.ini
+            path: ./.config/credentials.ini
             write-mode: overwrite
             contents: |
               USERNAME = ${{ secrets.USERNAME }} , PASSWORD = ${{ secrets.PASSWORD }}
