@@ -23,7 +23,8 @@ jobs:
               PASSWORD = ${{ secrets.PASSWORD }}
         -
           name: Build docker image
-          run: docker build --file=./Dockerfile -t devops_ws .
+          working-directory: .
+          run: docker build --file Dockerfile -t devops_ws .
           # uses: docker/build-push-action@v5
           # with:
           #   context: .
