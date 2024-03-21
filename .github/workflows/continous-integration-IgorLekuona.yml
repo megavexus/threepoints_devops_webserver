@@ -2,12 +2,9 @@ name: ci
 
 on:
   push
-    # branches:
-    #   - 'master'
 
 jobs:
   docker:
-      # if: github.ref == 'master' || contains(github.ref, 'feature') || contains(github.ref, 'hotfix')
       runs-on: ubuntu-latest
       steps:
         - 
@@ -16,10 +13,8 @@ jobs:
           run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
           id: extract_branch
         -
-          name: Check source branch
-          # run: echo ${{ steps.extract_branch.outputs.branch }}
-          if: ${{ steps.extract_branch.outputs.branch != 'master' }}
-          # || !(contains(${{ steps.extract_branch.outputs.branch }}, 'feature')) || !(contains(${{ steps.extract_branch.outputs.branch }}, 'hotfix'))
+          name: Check branch master/feature/hotfix
+          if: ${{ steps.extract_branch.outputs.branch != 'master' && !(contains( steps.extract_branch.outputs.branch , 'feature' )) && !(contains( steps.extract_branch.outputs.branch , 'hotfix')) }}
           run: exit -1
         -
           name: Pruebas de SAST
@@ -38,10 +33,3 @@ jobs:
           name: Build docker image
           working-directory: .
           run: docker build --file Dockerfile -t devops_ws .
-          # uses: docker/build-push-action@v5
-          # with:
-          #   context: .
-          #   file: Dockerfile
-          #   push: true
-          #   tags: myimage:latest
-          #   outputs: type=docker,dest=/tmp/myimage.tar
