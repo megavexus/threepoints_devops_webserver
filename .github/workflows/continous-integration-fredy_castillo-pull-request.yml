@@ -19,6 +19,7 @@ jobs:
             echo "::set-output name=allow_pull::true"
           else
             echo "::set-output name=allow_pull::false"
+          fi
 
       - name: Evaluar pull request
         if: steps.validate_pull_request.outputs.allow_pull == 'true'
