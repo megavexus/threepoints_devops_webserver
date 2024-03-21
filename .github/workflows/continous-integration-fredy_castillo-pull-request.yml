@@ -16,15 +16,17 @@ jobs:
         id: validate_pull_request
         run: |
           if [ -f allow_pull_request.txt ]; then
+            echo "el archivo existe"
             echo "::set-output name=allow_pull::true"
           else
+            echo "no existe archivo"
             echo "::set-output name=allow_pull::false"
           fi
 
       - name: Evaluar pull request
         if: steps.validate_pull_request.outputs.allow_pull == 'true'
         run: |
-            echo "Permitiendo pull request"
+          echo "Permitiendo pull request"
           
       - name: Evaluamos si es false
         if: steps.validate_pull_request.outputs.allow_pull == 'false'
