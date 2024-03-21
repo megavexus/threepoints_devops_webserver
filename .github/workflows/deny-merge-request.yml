@@ -19,12 +19,12 @@ jobs:
         -
           name: Análisis de código
           run: echo 'Realizando análisis de SAST'
-        - 
+        -
           name: Checkout repository
           uses: actions/checkout@v3
             # Repository name with owner. For example, actions/checkout
             # Default: ${{ github.repository }}
-            repository: ''
+          repository: ''
         - 
           name: Buscar archivo en repositorio
           uses: jeertmans/filesfinder@latest
