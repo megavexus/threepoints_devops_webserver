@@ -3,7 +3,6 @@ on:
   pull_request:
     branches:
       - 'master'
-    
   workflow_dispatch:
 env:
   env_var: ${{ vars.TEST_VAR }}
