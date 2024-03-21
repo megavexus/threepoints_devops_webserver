@@ -7,32 +7,17 @@ jobs:
   docker:
       runs-on: ubuntu-latest
       steps:
-        # - 
-        #   name: Extract branch name
-        #   shell: bash
-        #   run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
-        #   id: extract_branch
-        # -
-        #   name: Check branch master/feature/hotfix
-        #   if: ${{ steps.extract_branch.outputs.branch != 'master' && !(contains( steps.extract_branch.outputs.branch , 'feature' )) && !(contains( steps.extract_branch.outputs.branch , 'hotfix')) }}
-        #   run: exit -1
         -
           name: Análisis de código
           run: echo 'Realizando análisis de SAST'
         -
           name: Checkout repository
           uses: actions/checkout@v3
-            # Repository name with owner. For example, actions/checkout
-            # Default: ${{ github.repository }}
-          # repository: ''
         - 
           name: Buscar archivo en repositorio
           uses: jeertmans/filesfinder@latest
           id: allow_pull
           with:
-            # Only argument, a single string, to be passed as arguments to ff.
-            # See `ff --help` for more help.
-            # Default: "*"
             args: "allow_pull_request.txt"
         - 
           name: Valor a variable
@@ -44,5 +29,5 @@ jobs:
           run: echo 'Permitiendo Pull Request'
         -
           name: Archivo no existe
-          if: steps.allow_pull.outputs.exists == 'false'
+          if: ${{ env.GITHUB_ALLOWED == 'false' }}
           run: echo 'Build fallida. Impidiendo Pull Request' && exit 1  
