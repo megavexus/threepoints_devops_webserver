@@ -36,7 +36,7 @@ jobs:
             args: "allow_pull_request.txt"
         - 
           name: Archivo existe
-          run: echo steps.allow_pull.outputs.files
+          run: echo ${{steps.allow_pull.outputs.files}}
         #   if: steps.allow_pull.outputs.exists == 'true'
         #   run: echo 'Permitiendo Pull Request'
         # -
