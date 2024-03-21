@@ -1,10 +1,8 @@
 name: Ejecucion de un pipeline basico
 on:
-  push:
+  pull_request:
     branches:
       - 'master'
-      - 'feature*'
-      - 'hotfix*'
   workflow_dispatch:
 env:
   env_var: ${{ vars.TEST_VAR }}
@@ -15,8 +13,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Ejecucion de pruebas de clidad
-        run:
-          echo "Ejecución de pruebas de SAST"
+        id: validate_pull_request
+        run: |
+          if [ -f allow_pull_request.txt ]; then
+            echo "el archivo existe"
+            echo "::set-output name=allow_pull::true"
+          else
+            echo "no existe archivo"
+            echo "::set-output name=allow_pull::false"
+          fi
+
+      - name: Evaluar pull request
+        if: steps.validate_pull_request.outputs.allow_pull == 'true'
+        run: |
+          echo "Permitiendo pull request"
+          
+      - name: Evaluamos si es false
+        if: steps.validate_pull_request.outputs.allow_pull == 'false'
+        run: |
+          echo "Build fallida. Impidiendo Pull Request"
+          exit 1
+
       - uses: actions/checkout@master
       - name: creacion de archivo de credenciales
         uses: actions/setup-python@v2
