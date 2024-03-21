@@ -15,7 +15,6 @@ jobs:
       - name: Ejecucion de pruebas de clidad
         id: validate_pull_request
         run: |
-          echo "Ejecución de pruebas de SAST"
           if [ -f allow_pull_request.txt ]; then
             echo "::set-output name=allow_pull::true"
           else
