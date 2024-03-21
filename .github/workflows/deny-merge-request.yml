@@ -40,7 +40,7 @@ jobs:
           # run: echo ${{ steps.allow_pull.outputs.files == 'allow_pull_request.txt' }}
         -
           name: Archivo existe
-          if: ${{ $GITHUB_ALLOWED == 'true'}}
+          if: $GITHUB_ALLOWED == 'true'
           run: echo 'Permitiendo Pull Request'
         -
           name: Archivo no existe
