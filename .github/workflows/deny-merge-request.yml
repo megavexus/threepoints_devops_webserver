@@ -18,17 +18,27 @@ jobs:
         -
           name: Análisis de código
           run: echo 'Realizando análisis de SAST'
-        -
-          name: Comprobación de requisitos
+        - 
+          name: Checkout repository
+          uses: actions/checkout@v3
+            # Repository name with owner. For example, actions/checkout
+            # Default: ${{ github.repository }}
+            repository: ''
+        - 
+          name: Buscar archivo en repositorio
+          uses: jeertmans/filesfinder@latest
           id: allow_pull
-          uses: thebinaryfelix/check-file-existence-action@v1
           with:
-            files: 'allow_pull_request.txt'
+            # Only argument, a single string, to be passed as arguments to ff.
+            # See `ff --help` for more help.
+            # Default: "*"
+            args: "allow_pull_request.txt"
         - 
           name: Archivo existe
-          if: steps.allow_pull.outputs.exists == 'true'
-          run: echo 'Permitiendo Pull Request'
-        -
-          name: Archivo no existe
-          if: steps.allow_pull.outputs.exists == 'false'
-          run: echo 'Build fallida. Impidiendo Pull Request' && exit 1  
+          run: echo steps.allow_pull.outputs.files
+        #   if: steps.allow_pull.outputs.exists == 'true'
+        #   run: echo 'Permitiendo Pull Request'
+        # -
+        #   name: Archivo no existe
+        #   if: steps.allow_pull.outputs.exists == 'false'
+        #   run: echo 'Build fallida. Impidiendo Pull Request' && exit 1  
