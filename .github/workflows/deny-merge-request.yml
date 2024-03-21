@@ -1,0 +1,35 @@
+name: ci
+
+on:
+  pull-request
+
+jobs:
+  docker:
+      runs-on: ubuntu-latest
+      steps:
+        # - 
+        #   name: Extract branch name
+        #   shell: bash
+        #   run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+        #   id: extract_branch
+        # -
+        #   name: Check branch master/feature/hotfix
+        #   if: ${{ steps.extract_branch.outputs.branch != 'master' && !(contains( steps.extract_branch.outputs.branch , 'feature' )) && !(contains( steps.extract_branch.outputs.branch , 'hotfix')) }}
+        #   run: exit -1
+        -
+          name: Análisis de código
+          run: echo 'Realizando análisis de SAST'
+        -
+          name: Comprobación de requisitos
+          id: allow_pull
+          uses: thebinaryfelix/check-file-existence-action@v1
+          with:
+            files: 'allow_pull_request.txt'
+        - 
+          name: Archivo existe
+          if: steps.allow_pull.outputs.exists == 'true'
+          run: echo 'Permitiendo Pull Request'
+        -
+          name: Archivo no existe
+          if: steps.allow_pull.outputs.exists == 'false'
+          run: echo 'Build fallida. Impidiendo Pull Request' && exit 1  
