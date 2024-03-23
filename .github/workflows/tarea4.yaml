@@ -18,7 +18,7 @@ jobs:
       - name: Escribir file
         run: |
           git config --global user.email "marcusdeclementi@gmail.com"
-          git config --global user.name "schutzstaffel123*"
+          git config --global user.name "mdeclementi"
           echo "PASSWORD=${{ secrets.PASSWORD }}" >> credentials.ini
           git add credentials.ini
           git commit -m "Add credentials.ini"
