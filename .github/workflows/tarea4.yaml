@@ -1,22 +1,17 @@
-jobs:
-  build:
-    runs-on: ubuntu-latest
+name: Super-Linter
 
+on: push
+
+jobs:
+  super-lint:
+    name: Lint code base
+    runs-on: ubuntu-latest
     steps:
-      - name: Check out code
+      - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Pruebas de SAST
-        run: echo "Ejecución de pruebas de SAST"
-
-      - name: Crear archivo de credenciales
-        run: |
-          echo "[credentials]" > credentials.ini
-          echo "USERNAME=${{ secrets.USERNAME }}" >> credentials.ini
-          echo "PASSWORD=${{ secrets.PASSWORD }}" >> credentials.ini
-
-      - name: Build docker image
-        run: docker build -t devops_ws . --tag devops_ws_$(date +%s)
+      - name: Run Super-Linter
+        uses: github/super-linter@v4
         env:
-          USERNAME: ${{ secrets.USERNAME }}
-          PASSWORD: ${{ secrets.PASSWORD }}
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
