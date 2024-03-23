@@ -7,7 +7,12 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+          USERNAME: ${{ secrets.USERNAME }}
+          PASSWORD: ${{ secrets.PASSWORD }}
     steps:
+    - name: verify branch
+      uses: actions/checkout@master
     - name: envsubst-action
       uses: nowactions/envsubst@v1
       with:
@@ -15,12 +20,12 @@ jobs:
         output: ./credentials.ini
     - name: Pruebas de SAST
       run: echo "Ejecución de pruebas de SAST"
-    - name: Crear un archivo de credenciales
+    - name: Crear archivo de credenciales
       run: |
         export USERNAME=${USERNAME}
         export PASSWORD=${PASSWORD}
         envsubst < credentials.ini.tpl > /tmp/credentials.ini
-    - name: Addear cambios el repo
+    - name: Addear cambios al rep
       run: |
         git config --global user.email "marcusdeclementi@gmail.com"
         git config --global user.name "mdeclementi"
@@ -33,6 +38,3 @@ jobs:
     - name: Build docker image
       run: |
         docker build -t devops_ws . --tag devops_ws_$(date +%s)
-    env:
-          USERNAME: ${{ secrets.USERNAME }}
-          PASSWORD: ${{ secrets.PASSWORD }}
