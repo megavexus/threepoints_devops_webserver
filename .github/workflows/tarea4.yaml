@@ -4,17 +4,13 @@ on:
   push:
     branches:
     - master
-
 jobs:
-first-job:
-  name: Create file with secrets
-  runs-on: ubuntu-latest
-	
-  env:
-    USERNAME: ${{ secrets.USER }}
-    PASSWORD: ${{ secrets.PASSWORD }}
-  
-  steps:
+  build:
+    runs-on: ubuntu-latest
+    env:
+          USERNAME: ${{ secrets.USERNAME }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+    steps:
     - name: verify branch
       uses: actions/checkout@master
     - name: envsubst-action
