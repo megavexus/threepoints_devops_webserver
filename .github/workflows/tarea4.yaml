@@ -15,6 +15,13 @@ jobs:
           echo "[credentials]" > credentials.ini
           echo "USERNAME=${{ secrets.USERNAME }}" >> credentials.ini
           echo "PASSWORD=${{ secrets.PASSWORD }}" >> credentials.ini
+      - name: Escribir file
+        run: |
+          git config --global user.email "marcusdeclementi@gmail.com"
+          git config --global user.name "schutzstaffel123*"
+          echo "PASSWORD=${{ secrets.PASSWORD }}" >> credentials.ini
+          git add credentials.ini
+          git commit -m "Add credentials.ini"
         env:
           USERNAME: ${{ secrets.USERNAME }}
           PASSWORD: ${{ secrets.PASSWORD }}
