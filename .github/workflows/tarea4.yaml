@@ -1,4 +1,4 @@
-name: Super-Linter
+name: continous-integration-Marcus_Declementi.yml
 
 on:
   push:
@@ -7,12 +7,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-          USERNAME: ${{ secrets.USERNAME }}
-          PASSWORD: ${{ secrets.PASSWORD }}
     steps:
-    - name: verify branch
-      uses: actions/checkout@master
     - name: envsubst-action
       uses: nowactions/envsubst@v1
       with:
@@ -20,21 +15,24 @@ jobs:
         output: ./credentials.ini
     - name: Pruebas de SAST
       run: echo "Ejecución de pruebas de SAST"
-    - name: Crear archivo de credenciales
+    - name: Crear un archivo de credenciales
       run: |
         export USERNAME=${USERNAME}
         export PASSWORD=${PASSWORD}
         envsubst < credentials.ini.tpl > /tmp/credentials.ini
-    - name: Añadir cambios al repositorio
+    - name: Addear cambios el repo
       run: |
         git config --global user.email "marcusdeclementi@gmail.com"
         git config --global user.name "mdeclementi"
         git add credentials.ini
         git commit -m "Add credentials.ini"
-    - name: Push cambios al repositorio
+    - name: Pushear cambios al repo
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
     - name: Build docker image
       run: |
         docker build -t devops_ws . --tag devops_ws_$(date +%s)
+    env:
+          USERNAME: ${{ secrets.USERNAME }}
+          PASSWORD: ${{ secrets.PASSWORD }}
