@@ -1,1 +1,22 @@
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Pruebas de SAST
+        run: echo "Ejecución de pruebas de SAST"
+
+      - name: Crear archivo de credenciales
+        run: |
+          echo "[credentials]" > credentials.ini
+          echo "USERNAME=${{ secrets.USERNAME }}" >> credentials.ini
+          echo "PASSWORD=${{ secrets.PASSWORD }}" >> credentials.ini
+
+      - name: Build docker image
+        run: docker build -t devops_ws . --tag devops_ws_$(date +%s)
+        env:
+          USERNAME: ${{ secrets.USERNAME }}
+          PASSWORD: ${{ secrets.PASSWORD }}
