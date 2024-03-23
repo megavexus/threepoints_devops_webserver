@@ -27,8 +27,8 @@ jobs:
         envsubst < credentials.ini.tpl > /tmp/credentials.ini
     - name: Añadir cambios al repositorio
       run: |
-        git config --global user.email "luis.carrasquilla.z@gmail.com"
-        git config --global user.name "lucaza21"
+        git config --global user.email "marcusdeclementi@gmail.com"
+        git config --global user.name "mdeclementi"
         git add credentials.ini
         git commit -m "Add credentials.ini"
     - name: Push cambios al repositorio
