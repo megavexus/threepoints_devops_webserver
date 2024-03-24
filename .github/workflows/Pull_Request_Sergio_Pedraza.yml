@@ -1,4 +1,4 @@
-name: pull rama
+name: Pull Request Quality Gate
 
 on:
   pull_request:
@@ -6,46 +6,38 @@ on:
       - master
 
 jobs:
-  build:
+  quality_gate:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2 # Update to the latest version if available
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3 # Update to the latest version if available
+      - name: Analyze code
+        run: echo "Realizando análisis de SAST"
+      
+      - name: Check requirements
+        id: check_requirements
+        run: |
+          if [ -f allow_pull_request.txt ]; then
+            echo "Permitiendo Pull Request"
+            echo "ALLOW_PULL=true" >> $GITHUB_ENV
+          else
+            echo "Impidiendo Pull Request"
+            echo "ALLOW_PULL=false" >> $GITHUB_ENV
+            exit 1
+          fi
+      
+      - name: Allow build if pull is allowed
+        if: env.ALLOW_PULL == 'true'
+        run: echo "Permitiendo Pull Request"
+      
+      - name: Fail build if pull is not allowed
+        if: env.ALLOW_PULL != 'true'
+        run: |
+          echo "Build fallida. Impidiendo Pull Request"
+          exit 1
+      
+      - name: Save allow_pull_request.txt as artifact
+        if: always()
+        uses: actions/upload-artifact@v2
         with:
-          node-version: '20'
-
-      - name: Verificar existencia de allow_pull_request.txt
-        run: |
-          if [ -f "allow_pull_request.txt" ]; then
-            echo "El archivo allow_pull_request.txt existe. Permitiendo Pull Request."
-            echo "allow_pull=true" >> $GITHUB_ENV
-          else
-            echo "El archivo allow_pull_request.txt no existe. Impidiendo Pull Request."
-            echo "allow_pull=false" >> $GITHUB_ENV
-            exit 1
-          fi
-
-      - name: Imprimir estado de allow_pull
-        run: echo "allow_pull=${{ env.allow_pull }}"
-
-      - name: Permitir o impedir la build en función de allow_pull
-        run: |
-          if [ "${{ env.allow_pull }}" = "true" ]; then
-            echo "Permitiendo Pull Request. Continuando con la build."
-          else
-            echo "Build fallida. Impidiendo Pull Request."
-            exit 1
-          fi
-
-      - name: Crear archivo de credenciales
-        run: echo "[credentials]" > credentials.ini && echo "username=${{ secrets.USERNAME }}" >> credentials.ini && echo "password=${{ secrets.PASSWORD }}" >> credentials.ini
-
-      - name: Pruebas de SAST
-        run: echo "Ejecución de pruebas de SAST"
-
-      - name: Build Docker image
-        run: docker build -t devops_ws:$(date +%s) .
+          name: allow_pull_request
+          path: allow_pull_request.txt
