@@ -2,6 +2,8 @@ name: Pull Request Quality Gate
 
 on:
   pull_request:
+    branches:
+      - master
 
 jobs:
   quality_gate:
@@ -16,19 +18,19 @@ jobs:
         run: |
           if [ -f allow_pull_request.txt ]; then
             echo "Permitiendo Pull Request"
-            echo "::set-output name=allow_pull::true"
+            echo "ALLOW_PULL=true" >> $GITHUB_ENV
           else
             echo "Impidiendo Pull Request"
-            echo "::set-output name=allow_pull::false"
+            echo "ALLOW_PULL=false" >> $GITHUB_ENV
             exit 1
           fi
       
       - name: Allow build if pull is allowed
-        if: steps.check_requirements.outputs.allow_pull == 'true'
+        if: env.ALLOW_PULL == 'true'
         run: echo "Permitiendo Pull Request"
       
       - name: Fail build if pull is not allowed
-        if: steps.check_requirements.outputs.allow_pull != 'true'
+        if: env.ALLOW_PULL != 'true'
         run: |
           echo "Build fallida. Impidiendo Pull Request"
           exit 1
