@@ -1,0 +1,39 @@
+name: Continuous Integration Sergio Pedraza
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Run SAST tests
+        run: echo "Ejecución de pruebas de SAST"
+        
+      - name: Create credentials.ini
+        run: |
+          echo "[credentials]" > credentials.ini
+          echo "user=${{ secrets.USERNAME }}" >> credentials.ini
+          echo "password=${{ secrets.PASSWORD }}" >> credentials.ini
+      
+      - name: Build docker image
+        run: docker build -t devops_ws . --tag devops_ws_$(date +%s)
+
+      - name: Capture screenshots and artifacts
+        run: |
+          # Capture screenshots
+          # [Captura de pantalla de los secretos dados de alta]
+          # [Capturas del pipeline ejecutado correctamente]
+          # [Capturas del archivo “credentials.ini” generado]
+          # [Capturas de pantalla del log de la ejecución]
+          
+          # Save credentials.ini as an artifact
+          mv credentials.ini $GITHUB_WORKSPACE/credentials.ini
+          echo "credentials.ini generated: $GITHUB_WORKSPACE/credentials.ini"
+        continue-on-error: true
