@@ -10,9 +10,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+
       - name: Checkout code
         uses: actions/checkout@v2
-      
+
       - name: Run SAST tests
         run: echo "Ejecución de pruebas de SAST"
         
@@ -25,7 +30,8 @@ jobs:
       - name: Build docker image
         run: docker build -t devops_ws . --tag devops_ws_$(date +%s)
 
-      - name: Capture screenshots and artifacts
-        run: 
-          echo "credentials.ini generated:"
-          cat credentials.ini
+      - name: Move credentials.ini to root directory
+        run: mv credentials.ini $GITHUB_WORKSPACE/credentials.ini
+
+      - name: Display credentials.ini path
+        run: echo "credentials.ini generated:$GITHUB_WORKSPACE/credentials.ini"
