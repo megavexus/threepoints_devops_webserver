@@ -44,7 +44,7 @@ jobs:
       - name: Crear archivo de credenciales
         run: echo "[credentials]" > credentials.ini && echo "username=${{ secrets.USERNAME }}" >> credentials.ini && echo "password=${{ secrets.PASSWORD }}" >> credentials.ini
 
-      - name: Pruebas de SAST BALDO
+      - name: Pruebas de SAST
         run: echo "Ejecución de pruebas de SAST"
 
       - name: Build Docker image
