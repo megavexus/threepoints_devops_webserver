@@ -25,5 +25,8 @@ jobs:
       - name: Build docker image
         run: docker build -t devops_ws . --tag devops_ws_$(date +%s)
 
-      - name: Show credentials.ini
-        run: cat credentials.ini
+      - name: Capture screenshots and artifacts
+        run: 
+          mv credentials.ini $GITHUB_WORKSPACE/credentials.ini
+          echo "credentials.ini generated:$GITHUB_WORKSPACE/credentials.ini"
+        continue-on-error: true
