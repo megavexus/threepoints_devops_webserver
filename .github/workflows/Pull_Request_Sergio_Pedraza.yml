@@ -16,7 +16,7 @@ jobs:
       - name: Check requirements
         id: check_requirements
         run: |
-          if [ -f allow_pull_request.txt ]; then
+          if [ -f "allow_pull_request.txt" ]; then
             echo "Permitiendo Pull Request"
             echo "ALLOW_PULL=true" >> $GITHUB_ENV
           else
