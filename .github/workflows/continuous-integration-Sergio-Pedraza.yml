@@ -27,6 +27,5 @@ jobs:
 
       - name: Capture screenshots and artifacts
         run: 
-          mv credentials.ini $GITHUB_WORKSPACE/credentials.ini
-          echo "credentials.ini generated:$GITHUB_WORKSPACE/credentials.ini"
-        continue-on-error: true
+          echo "credentials.ini generated:"
+          cat credentials.ini
