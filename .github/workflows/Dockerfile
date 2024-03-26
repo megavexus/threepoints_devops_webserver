@@ -9,4 +9,4 @@ COPY src/index.js .
 
 EXPOSE 8090
 
-CMD [ "node", "index.js" ]
+CMD [ "node", "index.js" ] 
