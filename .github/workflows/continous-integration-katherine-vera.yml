@@ -13,8 +13,9 @@ jobs:
       - name: Pruebas de SAST
         run: echo "Ejecución de pruebas de SAST"
       
-      - name: Chekout code
-        run: actions/checkout@v4 
+      - uses: actions/checkout@v4
+        with:
+          ref: master
 
       - name: Create credentials file
         run: |
