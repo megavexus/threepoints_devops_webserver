@@ -3,7 +3,9 @@ name: DevOps Pipeline
 on:
   push:
     branches:
-      - master  # Ejecutar cuando se realiza un push a la rama master
+      - main
+      - 'feature*'
+      - 'hotfix*'  # Ejecutar cuando se realiza un push a la rama master
 
 jobs:
   build:
@@ -14,8 +16,6 @@ jobs:
         run: echo "Ejecución de pruebas de SAST"
       
       - uses: actions/checkout@v4
-        with:
-          ref: master
 
       - name: Create credentials file
         run: |
@@ -24,10 +24,6 @@ jobs:
           username = ${{ secrets.USERNAME }}
           password = ${{ secrets.PASSWORD }}
           EOF
-      # - name: Copy Dockerfile
-      #   run: cp Dockerfile $GITHUB_WORKSPACE/
-      - name: LS
-        run: ls
   
       - name: Build docker image
         run: docker build -t devops_ws . --tag devops_ws_$(date +%s)
