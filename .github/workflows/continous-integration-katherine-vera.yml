@@ -3,7 +3,7 @@ name: DevOps Pipeline
 on:
   push:
     branches:
-      - main
+      - master
       - 'feature*'
       - 'hotfix*'  # Ejecutar cuando se realiza un push a la rama master
 
