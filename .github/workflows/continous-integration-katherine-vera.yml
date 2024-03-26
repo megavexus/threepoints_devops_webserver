@@ -3,7 +3,7 @@ name: DevOps Pipeline
 on:
   push:
     branches:
-      - master  # Ejecutar cuando se realiza un push a la rama master
+      - main  # Ejecutar cuando se realiza un push a la rama main
 
 jobs:
   build:
@@ -21,5 +21,8 @@ jobs:
           password = ${{ secrets.PASSWORD }}
           EOF
 
+      - name: Copy Dockerfile
+        run: cp Dockerfile $GITHUB_WORKSPACE/
+
       - name: Build docker image
-        run: docker build -t devops_ws . --tag devops_ws_$(date +%s)
+        run: docker build -t devops_ws . --tag devops_ws_$(date +%s) $GITHUB_WORKSPACE/
