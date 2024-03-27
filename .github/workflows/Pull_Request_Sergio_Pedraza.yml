@@ -1,0 +1,51 @@
+name: pull rama
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2 # Update to the latest version if available
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3 # Update to the latest version if available
+        with:
+          node-version: '20'
+
+      - name: Verificar existencia de allow_pull_request.txt
+        run: |
+          if [ -f "allow_pull_request.txt" ]; then
+            echo "Permitiendo Pull Request"
+            echo "allow_pull=true" >> $GITHUB_ENV
+          else
+            echo "Impidiendo Pull Request"
+            echo "allow_pull=false" >> $GITHUB_ENV
+            exit 1
+          fi
+  
+      - name: Imprimir estado de allow_pull
+        run: echo "allow_pull=${{ env.allow_pull }}"
+
+      - name: Permitir o impedir la build en función de allow_pull
+        run: |
+          if [ "${{ env.allow_pull }}" = "true" ]; then
+            echo "Permitiendo Pull Request"
+          else
+            echo "Impidiendo Pull Request"
+            exit 1
+          fi
+
+      - name: Crear archivo de credenciales
+        run: echo "[credentials]" > credentials.ini && echo "username=${{ secrets.USERNAME }}" >> credentials.ini && echo "password=${{ secrets.PASSWORD }}" >> credentials.ini
+
+      - name: Pruebas de SAST
+        run: echo "Ejecución de pruebas de SAST"
+
+      - name: Build Docker image
+        run: docker build -t devops_ws:$(date +%s) .

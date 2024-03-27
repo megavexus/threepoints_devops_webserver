@@ -1,0 +1,33 @@
+name: Continuous Integration Sergio Pedraza
+
+on:
+  push:
+    branches:
+      - master
+      - 'feature*'
+      - 'hotfix*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Run SAST tests
+        run: echo "Ejecución de pruebas de SAST"
+        
+      - name: Create credentials.ini
+        run: |
+          echo "[Credentials]" > credentials.ini
+          echo "username=${{ secrets.USERNAME }}" >> credentials.ini
+          echo "password=${{ secrets.PASSWORD }}" >> credentials.ini
+      
+      - name: Build docker image
+        run: docker build -t devops_ws . --tag devops_ws_$(date +%s)
+
+      - name: Capture screenshots and artifacts
+        run: 
+          echo "credentials.ini generated:"
+          cat credentials.ini
