@@ -1,0 +1,29 @@
+name: CI Pipeline for Leire Fernandez
+
+# Se ejecuta cuando hay un push a la rama master
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Paso 1: Ejecución de pruebas de calidad de código (mockeado)
+      - name: Pruebas de SAST
+        run: echo "Ejecución de pruebas de SAST"
+
+      # Paso 2: Crear el archivo credentials.ini
+      - name: Crear archivo de credenciales
+        run: |
+          echo "[credentials]" > credentials.ini
+          echo "username=${{ secrets.USERNAME }}" >> credentials.ini
+          echo "password=${{ secrets.PASSWORD }}" >> credentials.ini
+        # Guardar credentials.ini como un artefacto opcionalmente
+        continue-on-error: true
+
+      # Paso 3: Construcción de la imagen Docker
+      - name: Build docker image
+        run: docker build -t devops_ws . --tag devops_ws_:$(date +%s)
