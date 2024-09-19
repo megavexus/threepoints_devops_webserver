@@ -33,7 +33,8 @@ jobs:
 
       # Paso 5: Construcción de la imagen Docker
       - name: Build docker image
-        run: docker build -t devops_ws . --tag devops-ws:$(date +%s)
+        run: docker build -t devops-ws:$(date +%s) .
+
 
       # Paso 6: Ejecutar el contenedor Docker
       - name: Run Docker container
