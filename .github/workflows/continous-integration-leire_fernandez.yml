@@ -24,10 +24,17 @@ jobs:
       - name: Mostrar contenido de credentials.ini
         run: cat credentials.ini
 
-      # Paso 4: Construcción de la imagen Docker
+      # Paso 4: Guardar credentials.ini como artefacto
+      - name: Guardar credentials.ini como artefacto
+        uses: actions/upload-artifact@v3
+        with:
+          name: credentials-artifact
+          path: credentials.ini
+
+      # Paso 5: Construcción de la imagen Docker
       - name: Build docker image
         run: docker build -t devops_ws . --tag devops-ws:$(date +%s)
 
-      # Paso 5: Ejecutar el contenedor Docker
+      # Paso 6: Ejecutar el contenedor Docker
       - name: Run Docker container
         run: docker run -d -p 8090:8090 devops-ws
