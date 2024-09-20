@@ -1,0 +1,44 @@
+name: Pull Request Quality Check
+
+# Se ejecuta cuando hay un Pull Request hacia cualquier rama
+on:
+  pull_request:
+
+jobs:
+  quality-gate:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Paso 1: Simulación de un análisis de código SAST
+      - name: Realizando análisis de SAST
+        run: echo "Realizando análisis de SAST"
+
+      # Paso 2: Comprobar si el archivo allow_pull_request.txt existe y definir la variable allow_pull
+      - name: Comprobar requisitos
+        id: check_allow_pull
+        run: |
+          if [ -f allow_pull_request.txt ]; then
+            echo "allow_pull=true" >> $GITHUB_ENV
+          else
+            echo "allow_pull=false" >> $GITHUB_ENV
+          fi
+
+      # Paso 3: Permitir el Pull Request si allow_pull es True
+      - name: Permitir Pull Request
+        if: env.allow_pull == 'true'
+        run: echo "Permitiendo Pull Request"
+
+      # Paso 4: Impedir el Pull Request si allow_pull es False
+      - name: Impedir Pull Request
+        if: env.allow_pull == 'false'
+        run: |
+          echo "Build fallida. Impidiendo Pull Request"
+          exit 1
+
+      # Paso 5: Guardar el archivo allow_pull_request.txt como artefacto
+      - name: Guardar allow_pull_request.txt como artefacto
+        if: env.allow_pull == 'true'
+        uses: actions/upload-artifact@v3
+        with:
+          name: allow-pull-request-artifact
+          path: allow_pull_request.txt
