@@ -32,10 +32,9 @@ jobs:
           path: credentials.ini
 
       # Paso 5: Construcción de la imagen Docker
-      - name: Build docker image
-        run: docker build -t devops_ws .
-          #docker build -t devops-ws:$(date +%s)
+      #- name: Build docker image
+      #  run: docker build -t devops-ws:$(date +%s)
 
       # Paso 6: Ejecutar el contenedor Docker
-      - name: Run Docker container
-        run: docker run -d -p 8090:8090 devops-ws
+      #- name: Run Docker container
+      #  run: docker run -d -p 8090:8090 devops-ws
