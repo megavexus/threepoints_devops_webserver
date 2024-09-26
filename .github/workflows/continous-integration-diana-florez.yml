@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-  workflow-dispatch:
 
 jobs:
   build:
@@ -26,11 +25,12 @@ jobs:
 
       # Paso 3: Crear archivo de credenciales
       - name: Crear archivo de credenciales
-        env: 
-          USERNAME: '${{ secrets.USERNAME }}'
-          PASSWORD: '${{ secrets.PASSWORD }}'
-        run: envsubst < credentials.ini.tpl > credentials.ini
+        run: |
+          echo "[Credentials]" > credentials.ini
+          echo "username=${{ secrets.USERNAME }}" >> credentials.ini
+          echo "password=${{ secrets.PASSWORD }}" >> credentials.ini
 
       # Paso 4: Build docker image
       - name: Build docker image
         run: docker build -t devops_ws . --tag devops_ws_:$(date +%s)
+
