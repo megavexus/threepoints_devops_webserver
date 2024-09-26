@@ -1,4 +1,4 @@
-name: Continuous Integration for diana_florez
+name: Continuous Integration for dianaflorez
 
 on:
   push:
