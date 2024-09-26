@@ -14,14 +14,10 @@ jobs:
       - name: Pruebas de SAST
         run: echo "Ejecución de pruebas de SAST"
 
-      # Paso 2: Instalar Docker (opcional, por si hay problemas con Docker)
-      - name: Instalar Docker
+      # Paso 2: Crear archivo de credenciales
+      - name: Crear archivo de credenciales
         run: |
-          sudo apt-get update
-          sudo apt-get install -y docker.io
-          sudo systemctl start docker
-          sudo systemctl enable docker
-          sudo usermod -aG docker $USER
-
-     
+          echo "[Credentials]" > credentials.ini
+          echo "username=${{ secrets.USERNAME }}" >> credentials.ini
+          echo "password=${{ secrets.PASSWORD }}" >> credentials.ini
 
