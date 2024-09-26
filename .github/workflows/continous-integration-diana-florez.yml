@@ -1,6 +1,7 @@
 name: Continuous Integration for DianaFlorez
 
 on:
+  workflow-dispatch:
   push:
     branches:
       - master
