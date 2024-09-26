@@ -1,12 +1,12 @@
 name: Continuous Integration for DianaFlorez
 
 on:
-  workflow-dispatch:
   push:
     branches:
       - master
       - 'feature*'
       - 'hotfix*'
+  workflow_dispatch:
 
 jobs:
   build:
