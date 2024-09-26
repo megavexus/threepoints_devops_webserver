@@ -1,0 +1,46 @@
+name: Pull Request Analysis for DianaFlorez
+
+on:
+  pull_request:
+    branches:
+      - master
+      - 'feature*'
+      - 'hotfix*'
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      # Paso 1: Realizando análisis de SAST
+      - name: Realizando análisis de SAST
+        run: echo "Realizando análisis de SAST"
+
+      # Paso 2: Comprobar si existe el archivo allow_pull_request.txt
+      - name: Comprobar requisitos
+        id: check_file
+        run: |
+          if [ -f allow_pull_request.txt ]; then
+            echo "allow_pull=true" >> $GITHUB_ENV
+          else
+            echo "allow_pull=false" >> $GITHUB_ENV
+          fi
+
+      # Paso 3: Permitir Pull Request si allow_pull es True
+      - name: Permitir Pull Request
+        if: env.allow_pull == 'true'
+        run: echo "Permitiendo Pull Request"
+
+      # Paso 4: Impedir Pull Request si allow_pull es False
+      - name: Impedir Pull Request
+        if: env.allow_pull == 'false'
+        run: |
+          echo "Build fallida. Impidiendo Pull Request"
+          exit 1
+
+      # Guardar el archivo como artefacto (opcional)
+      - name: Subir artefacto
+        if: env.allow_pull == 'false'
+        uses: actions/upload-artifact@v3
+        with:
+          name: resultado-pull-request
+          path: allow_pull_request.txt
