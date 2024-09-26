@@ -25,10 +25,10 @@ jobs:
 
       # Paso 3: Crear archivo de credenciales
       - name: Crear archivo de credenciales
-        run: |
-          echo "[Credentials]" > credentials.ini
-          echo "username=${{ secrets.USERNAME }}" >> credentials.ini
-          echo "password=${{ secrets.PASSWORD }}" >> credentials.ini
+        env: 
+          USERNAME: '${{ secrets.USERNAME }}'
+          PASSWORD: '${{ secrets.PASSWORD }}'
+        run: envsubst < credentials.ini.tpl > credentials.ini
 
       # Paso 4: Build docker image
       - name: Build docker image
