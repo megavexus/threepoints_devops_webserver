@@ -10,6 +10,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Build docker image
+        run: docker build -t devops_ws .
+
       # Paso 1: Pruebas de SAST (mockeado con un echo)
       - name: Pruebas de SAST
         run: echo "Ejecución de pruebas de SAST"
