@@ -1,0 +1,29 @@
+name: Continuous Integration for DianaFlorez
+
+on:
+  push:
+    branches:
+      - master
+      - 'feature*'
+      - 'hotfix*'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Paso 1: Pruebas de SAST (mockeado con un echo)
+      - name: Pruebas de SAST
+        run: echo "Ejecución de pruebas de SAST"
+
+      # Paso 2: Crear archivo de credenciales
+      - name: Crear archivo de credenciales
+        run: |
+          echo "[Credentials]" > credentials.ini
+          echo "username=${{ secrets.USERNAME }}" >> credentials.ini
+          echo "password=${{ secrets.PASSWORD }}" >> credentials.ini
+
+      # Paso 3: Build docker image
+      - name: Build docker image
+        run: docker build -t devops_ws . --tag devops_ws_:$(date +%s)
