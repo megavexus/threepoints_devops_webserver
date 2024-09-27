@@ -1,0 +1,77 @@
+name: Ejecucion de un pipeline basico
+on:
+  pull_request:
+    branches:
+      - 'master'
+  workflow_dispatch:
+env:
+  env_var: ${{ vars.TEST_VAR }}
+ 
+jobs:
+  display-variables:
+    name: ${env_var}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ejecucion de pruebas de clidad
+        id: validate_pull_request
+        run: |
+          if [ -f allow_pull_request.txt ]; then
+            echo "el archivo existe"
+            echo "::set-output name=allow_pull::true"
+          else
+            echo "no existe archivo"
+            echo "::set-output name=allow_pull::false"
+          fi
+
+      - name: Evaluar pull request
+        if: steps.validate_pull_request.outputs.allow_pull == 'true'
+        run: |
+          echo "Permitiendo pull request"
+          
+      - name: Evaluamos si es false
+        if: steps.validate_pull_request.outputs.allow_pull == 'false'
+        run: |
+          echo "Build fallida. Impidiendo Pull Request"
+          exit 1
+
+      - uses: actions/checkout@master
+      - name: creacion de archivo de credenciales
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+          
+
+      - name: create file
+        id: file_created
+        run : |
+          if [ -f credentials.ini ]; then
+            echo "archivo ya existe"
+            echo "::set-output name=file_exists::true"
+          else
+            sed -e "s/\${USERNAME}/${USERNAME}/g" -e "s/\${PASSWORD}/${PASSWORD}/g" credentials.ini.tpl > credentials.ini
+          fi      
+        env:
+          USERNAME: ${{ secrets.USERNAME }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+
+      - name: commit changues
+        if: steps.file_created.outputs.file_exists != 'true'
+        run: |
+          git config --local user.email "a.cmejia10@gmail.com"
+          git config --local user.name "alexcst90"
+          git add credentials.ini
+          git commit -m "Update credentials.ini"
+          git push
+
+      - name: Build docker image
+        run: |
+          docker build -t devops_ws . --tag devops_ws_$(date +%s)
+          
+        #run:  envsubst < credentials.ini.tpl > credentials.ini
+          #cp ./credentials.ini.tpl credentials.ini &&
+          #sed -i 's/username/${{ secrets.USERNAME }}/g' credentials.ini
+          
+          
+       
+#jobs:
+ # runs-on: ubuntu-latest
