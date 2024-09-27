@@ -20,23 +20,19 @@ jobs:
         with:
           files: allow_pull_request.txt
 
-      # Paso 3: Depuración - Verificar el valor devuelto por la acción
-      - name: Mostrar resultado de la verificación
-        run: echo "Archivo existe: ${{ steps.check_file.outputs.files_exists }}"
-
-      # Paso 4: Permitir Pull Request si existe el archivo
+      # Paso 3: Permitir Pull Request si existe el archivo
       - name: Permitir Pull Request
         if: steps.check_file.outputs.files_exists == 'true'
         run: echo "Permitiendo Pull Request"
 
-      # Paso 5: Impedir Pull Request si no existe el archivo
+      # Paso 4: Impedir Pull Request si no existe el archivo
       - name: Impedir Pull Request
         if: steps.check_file.outputs.files_exists == 'false'
         run: |
           echo "Build fallida. Impidiendo Pull Request"
           exit 1
 
-      # Paso 6: Guardar allow_pull_request.txt como artefacto (si existe)
+      # Paso 5: Guardar allow_pull_request.txt como artefacto (si existe)
       - name: Guardar allow_pull_request.txt como artefacto
         if: steps.check_file.outputs.files_exists == 'true'
         uses: actions/upload-artifact@v3
