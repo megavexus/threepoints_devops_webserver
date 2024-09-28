@@ -1,0 +1,40 @@
+# Se ejecuta cuando hay un push a la rama master
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Paso 1: Hacer checkout del código del repositorio
+      - name: Checkout del código
+        uses: actions/checkout@v3
+
+      # Paso 2: Ejecución de pruebas de calidad de código (mockeado)
+      - name: Pruebas de SAST
+        run: echo "Ejecución de pruebas de SAST"
+
+      # Paso 3: Crear el archivo credentials.ini
+      - name: Crear archivo de credenciales
+        run: |
+          echo "[credentials]" > credentials.ini
+          echo "username=${{ secrets.USERNAME }}" >> credentials.ini
+          echo "password=${{ secrets.PASSWORD }}" >> credentials.ini
+
+      # Paso 4: Mostrar el contenido de credentials.ini
+      - name: Mostrar contenido de credentials.ini
+        run: cat credentials.ini
+
+      # Paso 5: Guardar credentials.ini como artefacto
+      - name: Guardar credentials.ini como artefacto
+        uses: actions/upload-artifact@v4
+        with:
+          name: credentials-artifact
+          path: credentials.ini
+
+      # Paso 6: Construcción de la imagen Docker
+      - name: Build docker image
+        run: docker build . --file Dockerfile --tag devops_ws:$(date +%s)
