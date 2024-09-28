@@ -1,8 +1,10 @@
-# Se ejecuta cuando hay un push a la rama master
+# Se ejecuta cuando hay un push a las ramas master, feature/* y hotfix/*
 on:
   push:
     branches:
       - master
+      - feature/*
+      - hotfix/*
 
 jobs:
   build:
