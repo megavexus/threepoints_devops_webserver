@@ -3,14 +3,14 @@ name: Continuous Integration
 on:
   push:
     branches:
-      - master  # Se ejecuta cuando hay un push a master
+      - master  # Se ejecuta cuando hay un push a la rama master
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Pruebas de SAST
+      # 1. Pruebas de SAST (simulada)
       - name: Pruebas de SAST
         run: echo "Ejecución de pruebas de SAST"
       
@@ -21,6 +21,6 @@ jobs:
           echo "user=${{ secrets.USERNAME }}" >> credentials.ini
           echo "password=${{ secrets.PASSWORD }}" >> credentials.ini
 
-      # 3. Construir la imagen de Docker
+      # 3. Construcción del contenedor Docker
       - name: Build docker image
         run: docker build -t devops_ws . --tag devops_ws_:$(date +%s)
