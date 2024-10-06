@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: Continous Integration
 
 on:
   push:
@@ -8,27 +8,21 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-    # Checkout del código
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    # Pruebas de SAST (mockeado)
     - name: Pruebas de SAST
       run: echo "Ejecución de pruebas de SAST"
-
-    # Crear el archivo credentials.ini
+    
     - name: Crear archivo de credenciales
       run: |
         echo "[credentials]" > credentials.ini
         echo "user=${{ secrets.USERNAME }}" >> credentials.ini
         echo "password=${{ secrets.PASSWORD }}" >> credentials.ini
-
-    # Listar archivos para verificar la presencia de Dockerfile
-    - name: Listar archivos
-      run: ls -al
-
-    # Construcción de la imagen Docker
+    
     - name: Build docker image
       run: docker build -t devops_ws:$(date +%s) .
+
+    - name: Upload credentials.ini as artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: credentials-file
+        path: credentials.ini
